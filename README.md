@@ -69,7 +69,11 @@ Kids who play soccer (or any other sport for that matter) are typically competit
 
 #### Profile Page
 
+![placeholder]()
+
 #### Friends Page
+
+![placeholder]()
 
 #### View Stats Page (own stats only)
 
@@ -80,6 +84,8 @@ Kids who play soccer (or any other sport for that matter) are typically competit
 ![compared stats](screenshots/image-3.png)
 
 #### Update Stats Page
+
+![placeholder]()
 
 ### Data
 
