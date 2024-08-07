@@ -61,11 +61,11 @@ Kids who play soccer (or any other sport for that matter) are typically competit
 
 #### Home Page
 
-![home page](image.png)
+![home page](screenshots/image.png)
 
 #### Register/Login Page
 
-![register/login page](image-1.png)
+![register/login page](screenshots/image-1.png)
 
 #### Profile Page
 
@@ -73,17 +73,17 @@ Kids who play soccer (or any other sport for that matter) are typically competit
 
 #### View Stats Page (own stats only)
 
-![view stats page](image-2.png)
+![view stats page](screenshots/image-2.png)
 
 #### View Stats Page (compared state)
 
-![compared stats](image-3.png)
+![compared stats](screenshots/image-3.png)
 
 #### Update Stats Page
 
 ### Data
 
-![db diagram](image-4.png)
+![db diagram](screenshots/image-4.png)
 
 ```
 Table players (
@@ -170,7 +170,7 @@ CREATE TABLE famous_soccer_players (
 
 Parameters:
 
-- id: Café id
+- id: Stats id
 - token: JWT of the logged in player
 - rating: Number Rating out of 5 in 0.5 increments
 
