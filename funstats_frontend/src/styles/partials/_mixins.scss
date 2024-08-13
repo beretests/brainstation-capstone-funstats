@@ -1,0 +1,100 @@
+@use "variables" as *;
+
+@mixin tablet {
+  @media screen and (min-width: $tablet-breakpoint) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: $desktop-breakpoint) {
+    @content;
+  }
+}
+
+@mixin responsive_page_header {
+  font-size: 28px;
+  line-height: 36px;
+  font-weight: 600;
+  // font-family: "Chewy", sans-serif;
+
+  @include tablet {
+    font-size: 32px;
+    line-height: 40px;
+    font-weight: 600;
+  }
+}
+
+@mixin responsive_subheader {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+
+  @include tablet {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 600;
+  }
+}
+
+@mixin responsive_label {
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 600;
+
+  @include tablet {
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 600;
+  }
+}
+
+@mixin responsive_table-header {
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 600;
+  // color: $slate;
+
+  @include tablet {
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 600;
+    // color: $cloud;
+  }
+}
+
+@mixin responsive_body_large {
+  font-size: 15px;
+  line-height: 26px;
+  font-weight: 400;
+
+  @include tablet {
+    font-size: 16px;
+    line-height: 28px;
+    font-weight: 400;
+  }
+}
+
+@mixin font_body_medium_mobile {
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 400;
+
+  @include tablet {
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 400;
+  }
+}
+
+@mixin font_body_small_mobile {
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 400;
+
+  @include tablet {
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 400;
+  }
+}
