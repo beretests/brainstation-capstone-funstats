@@ -13,7 +13,7 @@ app.get("/", (_req, res) => {
   res.send("Welcome to FunStats API");
 });
 
-app.use("/players", playerRoutes);
+app.use("/player", playerRoutes);
 app.use("/stats", statRoutes);
 
 app.listen(PORT, () => {
