@@ -15,13 +15,13 @@
 @mixin responsive_page_header {
   font-size: 28px;
   line-height: 36px;
-  font-weight: 600;
+  // font-weight: 600;
   // font-family: "Chewy", sans-serif;
 
   @include tablet {
     font-size: 32px;
     line-height: 40px;
-    font-weight: 600;
+    // font-weight: 600;
   }
 }
 
@@ -96,5 +96,27 @@
     font-size: 12px;
     line-height: 18px;
     font-weight: 400;
+  }
+}
+
+@mixin button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: $raisin-black;
+  color: $powder-blue;
+  cursor: pointer;
+  transition: border-color 0.25s;
+
+  :hover {
+    border-color: #646cff;
+  }
+
+  :focus,
+  :focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
   }
 }

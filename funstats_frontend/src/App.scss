@@ -4,7 +4,8 @@
 
 html {
   box-sizing: border-box;
-  font-family: "Chewy", sans-serif;
+  font-family: "Fredoka", sans-serif;
+  display: flex;
 
   *,
   *::before,
@@ -22,6 +23,9 @@ h1 {
 }
 
 :root {
+  background-color: $columbia-blue;
+  // filt
+
   // font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   // line-height: 1.5;
   // font-weight: 400;
