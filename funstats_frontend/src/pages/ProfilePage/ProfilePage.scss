@@ -1,7 +1,12 @@
 .profile {
   width: 100vw;
   &__image-container {
-    width: 40%;
+    // width: 40%;
     overflow: hidden;
+  }
+
+  &__image {
+    object-fit: contain;
+    width: 100%;
   }
 }

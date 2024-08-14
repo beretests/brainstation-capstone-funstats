@@ -3,6 +3,7 @@ import { useParams, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import StatsTable from "../../components/StatsTable/StatsTable";
 import "./ProfilePage.scss";
+import axios from "axios";
 
 function ProfilePage() {
   const url = import.meta.env.VITE_API_URL;
@@ -14,13 +15,13 @@ function ProfilePage() {
   const data = location.state?.data;
 
   const getAggregateStats = async (id) => {
-    try {
-      const response = await axios.get(`${url}/player/${id}/stats`);
-      // console.log("STATS: ", stats);
-      setPlayerAggregateStats(JSON.parse(response));
-    } catch (err) {
-      alert("Error: ", err);
-    }
+    // try {
+    const response = await axios.get(`${url}/player/${id}/stats`);
+    // console.log("STATS: ", response);
+    setPlayerAggregateStats(response.data);
+    // } catch (err) {
+    //   alert("Error: ", err);
+    // }
   };
 
   const handleClick = async () => {
@@ -35,7 +36,7 @@ function ProfilePage() {
 
   return (
     <>
-      {console.log(playerAggregateStats)}
+      {/* {console.log(playerAggregateStats)} */}
       <div className="profile">
         <div className="profile__image-container">
           <img
