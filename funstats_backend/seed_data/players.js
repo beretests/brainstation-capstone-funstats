@@ -5,7 +5,7 @@ export default [
     name: "Eric Omeje",
     password: "thisisme",
     profile_pic: "https://gloria-pics.beretesting.com/photo-23.jpg",
-    DOB: "1280556000",
+    DOB: "1280556000000",
     position: "Center Back",
   },
   {
@@ -13,8 +13,8 @@ export default [
     username: "elvis",
     name: "Elvis Omeje",
     password: "thisisme",
-    profile_pic: "https://gloria-pics.beretesting.com/photo-43.jpg",
-    DOB: "1347948000",
+    profile_pic: "https://gloria-pics.beretesting.com/elvis.jpg",
+    DOB: "1347948000000",
     position: "Center Forward",
   },
 ];

@@ -7,9 +7,42 @@ export const singlePlayer = async (req, res) => {
     const data = await knex("players")
       .where({ id: req.params.id })
       .select("id", "name", "profile_pic", "DOB", "position");
-    res.json(data);
+    res.json(data[0]);
   } catch (err) {
     res.status(400).send(`Error retrieving player ${req.params.id}: ${err}`);
+  }
+};
+
+export const playerStatAggregates = async (req, res) => {
+  try {
+    const data = await knex("stats")
+      .where({ player_id: req.params.id })
+      .sum({
+        goals_scored: "goals_scored",
+        assists: "assists",
+        shots_on_target: "shots_on_target",
+        tackles: "tackles",
+        interceptions: "interceptions",
+        saves: "saves",
+        yellow_cards: "yellow_cards",
+        red_cards: "red_cards",
+        fouls: "fouls",
+        headers_won: "headers_won",
+        offsides: "offsides",
+      })
+      .first();
+
+    // If record is not found, respond with 404
+    if (!data) {
+      return res
+        .status(404)
+        .send(`Player id: ${req.params.id} has no stats added yet.`);
+    }
+
+    // Knex returns an array of records, so we need to send response with a single object only
+    res.json(data);
+  } catch (err) {
+    res.status(400).send(`Error retrieving stat: ${err}`);
   }
 };
 

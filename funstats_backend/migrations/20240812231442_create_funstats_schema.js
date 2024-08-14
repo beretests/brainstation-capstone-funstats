@@ -6,7 +6,7 @@ export const up = function (knex) {
       table.string("name").notNullable();
       table.string("password").notNullable();
       table.string("profile_pic");
-      table.integer("DOB").notNullable();
+      table.bigInteger("DOB").notNullable();
       table.string("position");
       table.timestamp("updated_at").defaultTo(knex.fn.now());
     })
@@ -19,17 +19,18 @@ export const up = function (knex) {
         .inTable("players")
         .onUpdate("CASCADE")
         .onDelete("CASCADE");
-      table.integer("goals_scored");
-      table.integer("assists");
-      table.integer("shots_on_target");
-      table.integer("tackles");
-      table.integer("interceptions");
-      table.integer("saves");
-      table.integer("yellow_cards");
-      table.integer("red_cards");
-      table.integer("fouls");
-      table.integer("headers_won");
-      table.integer("offsides");
+      table.string("game").notNullable();
+      table.integer("goals_scored").defaultTo(0);
+      table.integer("assists").defaultTo(0);
+      table.integer("shots_on_target").defaultTo(0);
+      table.integer("tackles").defaultTo(0);
+      table.integer("interceptions").defaultTo(0);
+      table.integer("saves").defaultTo(0);
+      table.integer("yellow_cards").defaultTo(0);
+      table.integer("red_cards").defaultTo(0);
+      table.integer("fouls").defaultTo(0);
+      table.integer("headers_won").defaultTo(0);
+      table.integer("offsides").defaultTo(0);
       table.timestamp("updated_at").defaultTo(knex.fn.now());
     });
   // .createTable("friendship", (table) => {
