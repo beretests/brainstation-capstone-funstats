@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import StatsTable from "../../components/StatsTable/StatsTable";
 import "./ProfilePage.scss";
 import axios from "axios";
+import { getAge } from "../../utils/getAge";
 
 function ProfilePage() {
   const url = import.meta.env.VITE_API_URL;
@@ -47,7 +48,7 @@ function ProfilePage() {
         </div>
         <div className="profile__details">
           <p className="profile__name">{data.name}</p>
-          <p className="profile__age">{data.DOB}</p>
+          <p className="profile__age">{getAge(data.DOB)}</p>
           <p className="profile__position">{data.position}</p>
         </div>
         <button className="profile__button" onClick={() => handleClick()}>
