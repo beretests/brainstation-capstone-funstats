@@ -34,7 +34,7 @@ function HomePage() {
   const handleClick = async (id) => {
     try {
       const data = await axios.get(`${url}/player/${id}`);
-      navigate(`/player/${id}`, { state: { data: data.data[0] } });
+      navigate(`/player/${id}`, { state: { data: data.data } });
     } catch (err) {
       alert("Error: ", err);
     }
