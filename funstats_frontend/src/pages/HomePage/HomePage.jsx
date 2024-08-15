@@ -56,8 +56,9 @@ function HomePage() {
             Goals, Stats and Friendly Rivalries!
           </h2>
           <button className="home__button" onClick={() => handleClick(id)}>
-            Login/Register
+            View Profile
           </button>
+          <button className="home__button">Login/Register</button>
         </div>
       </div>
     </>

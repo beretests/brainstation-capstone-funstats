@@ -1,5 +1,16 @@
+@use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
+@use "@/styles/partials/typography" as *;
+
 .profile {
+  text-align: center;
   width: 100vw;
+  display: flex;
+  flex-direction: column;
+
+  @include tablet {
+    flex-direction: row;
+  }
   &__image-container {
     // width: 40%;
     overflow: hidden;
@@ -8,5 +19,15 @@
   &__image {
     object-fit: contain;
     width: 100%;
+  }
+
+  &__button-layout {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  &__button {
+    @include button;
   }
 }
