@@ -1,0 +1,28 @@
+@use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
+@use "@/styles/partials/typography" as *;
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  &__logo {
+    // width: 3rem;
+    display: flex;
+    align-items: end;
+  }
+
+  &__logo-image {
+    width: 3rem;
+  }
+
+  &__title {
+    @include responsive_page_header;
+  }
+  &__links {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+}
