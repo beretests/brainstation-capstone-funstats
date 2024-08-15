@@ -6,7 +6,7 @@ export const up = function (knex) {
       table.string("name").notNullable();
       table.string("password").notNullable();
       table.string("profile_pic");
-      table.bigInteger("DOB").notNullable();
+      table.integer("DOB").notNullable();
       table.string("position");
       table.timestamp("updated_at").defaultTo(knex.fn.now());
     })

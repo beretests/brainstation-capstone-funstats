@@ -33,7 +33,7 @@ const knex = createKnex(knexFile);
 
 export const singleStat = async (req, res) => {
   try {
-    const data = await knex("stat").where({ player_id: req.params.id });
+    const data = await knex("stats").where({ player_id: req.params.id });
 
     // If record is not found, respond with 404
     if (!data.length) {

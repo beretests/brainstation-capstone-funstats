@@ -39,79 +39,64 @@ export const playerStatAggregates = async (req, res) => {
         .send(`Player id: ${req.params.id} has no stats added yet.`);
     }
 
-    // Knex returns an array of records, so we need to send response with a single object only
     res.json(data);
   } catch (err) {
     res.status(400).send(`Error retrieving stat: ${err}`);
   }
 };
 
-// export const singlePlayer = async (req, res) => {
-//   try {
-//     const data = await knex("player").where({ id: req.params.id });
+export const addStat = async (req, res) => {
+  const { date, game, player_id } = req.body;
 
-//     // If record is not found, respond with 404
-//     if (!data.length) {
-//       return res
-//         .status(404)
-//         .send(`Record with id: ${req.params.id} is not found`);
-//     }
+  if (!date || !game || !player_id) {
+    return res.status(400).json({
+      message: "Please provide all required information",
+    });
+  }
 
-//     // Knex returns an array of records, so we need to send response with a single object only
-//     res.json(data[0]);
-//   } catch (err) {
-//     res.status(400).send(`Error retrieving player ${req.params.id}: ${err}`);
-//   }
-// };
+  try {
+    const data = await knex("stats").insert(req.body);
+    // const newStat = await knex("stats").select("username").where({ id: data[0] });
+    res.status(201).json("Successfully created stat");
+  } catch (error) {
+    res.status(500).json({ message: `Unable to create stat: ${error}` });
+  }
+};
 
-// export const playerStats = async (req, res) => {
-//   try {
-//     const data = await knex("stat").where({ player_id: req.params.id });
-//     res.json(data);
-//   } catch (err) {
-//     res
-//       .status(400)
-//       .send(`Error retrieving stats for player ${req.params.id}: ${err}`);
-//   }
-// };
+export const addPlayer = async (req, res) => {
+  const { username, name, password, DOB, position } = req.body;
 
-// export const addPlayer = async (req, res) => {
-//   // Validate the request body for required data
-//   if (
-//     !req.body.name ||
-//     !req.body.username ||
-//     !req.body.password ||
-//     !req.body.date_of_birth ||
-//     !req.body.email
-//   ) {
-//     return res.status(400).send("Please make sure to fill all required fields");
-//   }
+  if (!username || !name || !password || !DOB || !position) {
+    return res.status(400).json({
+      message: "Please provide all required information",
+    });
+  }
 
-//   try {
-//     const data = await knex("player").insert(req.body);
+  try {
+    const data = await knex("players").insert(req.body);
+    // const newStat = await knex("stats").where({ id: data[0] });
+    res.status(201).json("Successfully created player");
+  } catch (error) {
+    res.status(500).json({ message: `Unable to create player: ${error}` });
+  }
+};
 
-//     // For POST requests we can respond with 201 and the location of the newly created record
-//     const newplayerURL = `/players/${data[0]}`;
-//     res.status(201).location(newplayerURL).end(newplayerURL);
-//   } catch (err) {
-//     res.status(400).send(`Error creating player: ${err}`);
-//   }
-// };
+export const updatePlayer = async (req, res) => {
+  // const { name, DOB, position, profile_pic } = req.body;
 
-// export const updatePlayer = async (req, res) => {
-//   try {
-//     await knex("player").update(req.body).where({ id: req.params.id });
-//     res.send(`Player with id: ${req.params.id} has been updated`);
-//   } catch (err) {
-//     res.status(400).send(`Error updating player ${req.params.id}: ${err}`);
-//   }
-// };
+  // if ( !name   || !DOB || !position) {
+  //   return res.status(400).json({
+  //     message: "Please provide all required information",
+  //   });
+  // }
 
-// export const deletePlayer = async (req, res) => {
-//   try {
-//     await knex("player").delete().where({ id: req.params.id });
-//     res.status(204).send(`player with id ${req.params.id} was deleted`);
-//   } catch (err) {
-//     res.status(400).send(`Error deleting player ${req.params.id}: ${err}`);
-//   }
-// };
+  try {
+    const data = await knex("players")
+      .where({ id: req.params.id })
+      .update(req.body);
+    // const newStat = await knex("stats").where({ id: data[0] });
+    res.status(204).json("Successfully updated player");
+  } catch (error) {
+    res.status(500).json({ message: `Unable to update player: ${error}` });
+  }
+};
