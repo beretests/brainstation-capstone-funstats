@@ -12,12 +12,13 @@
   }
 
   &__blurb-container {
-    // flex: 1;
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 2rem;
     background-color: $columbia-blue;
+    height: 100vh;
 
     @include tablet {
       order: -1;
@@ -27,12 +28,12 @@
   &__image-container {
     overflow: hidden;
     flex: 1;
-    // height: 100%;
   }
 
   &__hero-image {
     object-fit: contain;
     width: 100%;
+    height: 100vh;
   }
 
   &__page-header {

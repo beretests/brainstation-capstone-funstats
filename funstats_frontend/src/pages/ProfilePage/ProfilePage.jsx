@@ -1,39 +1,18 @@
 import React from "react";
-import { useParams, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
-import StatsTable from "../../components/StatsTable/StatsTable";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import "./ProfilePage.scss";
-import axios from "axios";
 import { getAge } from "../../utils/getAge";
 
 function ProfilePage() {
-  const url = import.meta.env.VITE_API_URL;
-
-  // const { id } = useParams();
+  const { id } = useParams();
   const location = useLocation();
-  const [playerAggregateStats, setPlayerAggregateStats] = useState({});
-  const [isVisible, setIsVisible] = useState(false);
   const data = location.state?.data;
 
-  const getAggregateStats = async (id) => {
-    // try {
-    const response = await axios.get(`${url}/player/${id}/stats`);
-    // console.log("STATS: ", response);
-    setPlayerAggregateStats(response.data);
-    // } catch (err) {
-    //   alert("Error: ", err);
-    // }
-  };
+  const navigate = useNavigate();
 
-  const handleClick = async () => {
-    setIsVisible(!isVisible);
+  const handleClick = (id) => {
+    navigate(`/player/${id}/stats`);
   };
-
-  useEffect(() => {
-    if (isVisible) {
-      getAggregateStats(data.id);
-    }
-  }, [isVisible]);
 
   return (
     <>
@@ -52,16 +31,15 @@ function ProfilePage() {
             <p className="profile__age">{getAge(data.DOB)}</p>
             <p className="profile__position">{data.position}</p>
             <div className="profile__button-layout">
-              <button className="profile__button" onClick={() => handleClick()}>
-                {isVisible ? "Hide Stats" : "Show Stats"}
+              <button
+                className="profile__button"
+                onClick={() => handleClick(id)}
+              >
+                View Stats
               </button>
               <button className="profile__button">View Friends</button>
             </div>
           </div>
-        </div>
-
-        <div className="stats">
-          {isVisible && <StatsTable stats={playerAggregateStats} />}
         </div>
       </div>
     </>
