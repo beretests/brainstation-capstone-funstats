@@ -32,31 +32,22 @@ export const up = function (knex) {
       table.integer("headers_won").defaultTo(0);
       table.integer("offsides").defaultTo(0);
       table.timestamp("updated_at").defaultTo(knex.fn.now());
+    })
+    .createTable("friendship", function (table) {
+      table.uuid("player1_id").notNullable();
+      table.uuid("player2_id").notNullable();
+      table.primary(["player1_id", "player2_id"]);
+      table.check("?? < ??", ["player1_id", "player2_id"]);
+      table.foreign("player1_id").references("id").inTable("players");
+      table.foreign("player2_id").references("id").inTable("players");
+      table.timestamp("updated_at").defaultTo(knex.fn.now());
     });
-  // .createTable("friendship", (table) => {
-  //   table.uuid("id").defaultTo(knex.fn.uuid()).primary();
-  //   table
-  //     .uuid("player1_id")
-  //     .references("id")
-  //     .inTable("players")
-  //     .onUpdate("CASCADE")
-  //     .onDelete("CASCADE");
-  //   table
-  //     .uuid("player2_id")
-  //     .references("id")
-  //     .inTable("players")
-  //     .onUpdate("CASCADE")
-  //     .onDelete("CASCADE");
-  //   table.timestamp("updated_at").defaultTo(knex.fn.now());
-  // });
 };
 
 export const down = function (knex) {
-  return (
-    knex.schema
-      // .dropTable("friendship")
-      .dropTable("stats")
-      .dropTable("players")
-  );
+  return knex.schema
+    .dropTable("friendship")
+    .dropTable("stats")
+    .dropTable("players");
   // .dropTable("soccer_stars");
 };

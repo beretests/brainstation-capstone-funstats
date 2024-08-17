@@ -12,4 +12,10 @@ router.route("/:id/stats").get(playerController.playerStatAggregates);
 router.route("/:id/stats/add").post(playerController.addStat);
 router.route("/add").post(playerController.addPlayer);
 
+router
+  .route("/:id/friends")
+  .get(playerController.getFriends)
+  .post(playerController.addFriend);
+
+// router.route("/:id/friends/stats").get(playerController.getFriendStats);
 export default router;
