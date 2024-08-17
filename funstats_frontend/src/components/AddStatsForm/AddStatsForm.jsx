@@ -8,7 +8,7 @@ import axios from "axios";
 import Alert from "../Alert/Alert";
 import { getAggregateStats } from "../../utils/getAggregateStats";
 
-function AddStatsForm({ setPlayerAggregateStats }) {
+function AddStatsForm({ setPlayerAggregateStats, setIsVisible }) {
   const { id } = useParams();
   const url = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
@@ -62,10 +62,6 @@ function AddStatsForm({ setPlayerAggregateStats }) {
     setSelectedOptions(selected);
   };
 
-  // const clearSelection = () => {
-  //   setSelectedOptions([]);
-  // };
-
   const handleKeyDown = (event) => {
     if (["e", "-", "+"].includes(event.key)) {
       event.preventDefault();
@@ -114,10 +110,6 @@ function AddStatsForm({ setPlayerAggregateStats }) {
 
       try {
         await axios.post(`${url}/player/${id}/stats/add`, formData);
-        // const response = await axios.get(`${url}/videos/${id}`);
-        // setCurrentVideo(response.data);
-        // setSelectedOptions(null);
-        // navigate(`/player/${id}/stats`);
         setSubmitted(true);
         alert("Successfully added stat");
         // <Alert
@@ -125,23 +117,14 @@ function AddStatsForm({ setPlayerAggregateStats }) {
         //   type="success"
         //   duration={5000}
         // />;
-        // clearSelection();
-
+        setIsVisible(false);
         event.target.reset();
-        // setFormData({
-        //   player_id: id,
-        //   date: today,
-        //   game: "",
-        // });
-        // isVisible = false;
       } catch (err) {
         console.log("Error adding stat: ", err);
         alert("Error adding stat!");
       }
       console.log("Form submitted successfully with data:", formData);
     }
-
-    // event.target.reset();
   };
 
   return (
@@ -189,7 +172,6 @@ function AddStatsForm({ setPlayerAggregateStats }) {
                 id="selectStats"
                 onChange={handleSelectChange}
                 placeholder="Select stats"
-                isClearable
               />
               {selectedOptions.map((option) => (
                 <div key={option.value} style={{ marginBottom: "10px" }}>

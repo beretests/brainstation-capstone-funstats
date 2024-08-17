@@ -14,8 +14,6 @@ function StatsPage() {
     getAggregateStats(id, setPlayerAggregateStats);
   }, []);
 
-  // setIsVisible(false);
-
   const handleClick = () => {
     setIsVisible(true);
   };
@@ -30,7 +28,10 @@ function StatsPage() {
         <button className="profile__button">Compare Stat</button>
       </div>
       {isVisible && (
-        <AddStatsForm setPlayerAggregateStats={setPlayerAggregateStats} />
+        <AddStatsForm
+          setPlayerAggregateStats={setPlayerAggregateStats}
+          setIsVisible={setIsVisible}
+        />
       )}
     </>
   );
