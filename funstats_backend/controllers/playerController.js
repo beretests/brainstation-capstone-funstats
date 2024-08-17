@@ -61,22 +61,22 @@ export const addStat = async (req, res) => {
   }
 };
 
-export const addPlayer = async (req, res) => {
-  const { username, name, password, DOB, position } = req.body;
+// export const addPlayer = async (req, res) => {
+//   const { username, name, password, DOB, position } = req.body;
 
-  if (!username || !name || !password || !DOB || !position) {
-    return res.status(400).json({
-      message: "Please provide all required information",
-    });
-  }
+//   if (!username || !name || !password || !DOB || !position) {
+//     return res.status(400).json({
+//       message: "Please provide all required information",
+//     });
+//   }
 
-  try {
-    const data = await knex("players").insert(req.body);
-    res.status(201).json("Successfully created player");
-  } catch (error) {
-    res.status(500).json({ message: `Unable to create player: ${error}` });
-  }
-};
+//   try {
+//     const data = await knex("players").insert(req.body);
+//     res.status(201).json("Successfully created player");
+//   } catch (error) {
+//     res.status(500).json({ message: `Unable to create player: ${error}` });
+//   }
+// };
 
 export const updatePlayer = async (req, res) => {
   try {

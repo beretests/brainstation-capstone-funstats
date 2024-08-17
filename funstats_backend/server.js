@@ -6,6 +6,7 @@ import { randomBytes } from "crypto";
 import express from "express";
 import statRoutes from "./routes/statRoute.js";
 import playerRoutes from "./routes/playerRoute.js";
+import authRoutes from "./routes/auth.js";
 
 const app = express();
 const PORT = process.env.PORT || 5050;
@@ -25,6 +26,7 @@ app.get("/", (_req, res) => {
   res.send("Welcome to FunStats API");
 });
 
+app.use("/", authRoutes);
 app.use("/player", playerRoutes);
 app.use("/stats", statRoutes);
 
