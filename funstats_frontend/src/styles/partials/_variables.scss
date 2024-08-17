@@ -7,6 +7,7 @@ $columbia-blue: #bdd4e7ff;
 $raisin-black: #212227ff;
 $dim-gray: #637074ff;
 $powder-blue: #aab9cfff;
+$stats-text: #d4e7bd;
 
 /* SCSS RGB */
 $cool-gray: rgba(134, 147, 171, 1);
@@ -40,14 +41,7 @@ $gradient-bottom: linear-gradient(
   #637074ff,
   #aab9cfff
 );
-$gradient-left: linear-gradient(
-  270deg,
-  #8693abff,
-  #bdd4e7ff,
-  #212227ff,
-  #637074ff,
-  #aab9cfff
-);
+$gradient-left: linear-gradient(270deg, #8693abff, #bdd4e7ff, #aab9cfff);
 $gradient-top-right: linear-gradient(
   45deg,
   #8693abff,

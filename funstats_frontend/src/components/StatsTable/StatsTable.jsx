@@ -1,90 +1,29 @@
-function StatsTable({ stats }) {
+import "./StatsTable.scss";
+
+function StatsTable({ stats, friend_stats }) {
   const rows = [];
 
-  // Using for...in loop to iterate over the stats object
   for (const key in stats) {
-    if (Object.hasOwnProperty.call(stats, key)) {
-      rows.push(
-        <tr key={key}>
-          <td>{key.replace(/_/g, " ")}</td>
-          <td>{stats[key]}</td>
-        </tr>
-      );
-    }
+    rows.push(
+      <div key={key} className="stats__items">
+        <h3 className="stats__name">{key.replace(/_/g, " ")}</h3>
+        <p className="stats__value">{stats[key]}</p>
+      </div>
+    );
   }
 
   return (
-    <table
-      border="1"
-      cellPadding="10"
-      style={{ margin: "20px auto", borderCollapse: "collapse", width: "50%" }}
-    >
-      <thead>
-        <tr>
-          <th>Stat</th>
-          <th>Value</th>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
-    </table>
+    <>
+      <div className="stats">
+        <div className="stats__header">
+          <h2 className="stats__title">Stat</h2>
+          <h2 className="stats__title">Value</h2>
+        </div>
+
+        <div className="stats__rows">{rows}</div>
+      </div>
+    </>
   );
-
-  // console.log("Stats: ", stats.goals_scored);
-  // const headers = Object.keys(stats);
-  // const rows = Object.values(stats);
-
-  // return (
-  /* <table>
-      <thead>
-        <tr>
-          <th colSpan={2}></th>
-        </tr>
-      </thead>
-      <tbody>
-        {headers.map((header) => (
-          <tr key={header}>
-            <td key="safe">{header.replace(/_/g, " ")}</td>
-            {console.log("Row: ", header)}
-            <td key="key">{stats.header}</td>
-          </tr>
-        ))}
-        {/* <tr key="key">
-          {rows.map((cell) => (
-            <td key="key">{cell}</td>
-          ))}
-        </tr> */
-  //   </tbody>
-  // </table> */}
-
-  // const rows = [];
-
-  // // Using for...in loop to iterate over the stats object
-  // for (const key in stats) {
-  //   if (Object.hasOwnProperty.call(stats, key)) {
-  //     rows.push(
-  //       <tr key={key}>
-  //         <td>{key.replace(/_/g, " ")}</td>
-  //         <td>{stats[key]}</td>
-  //       </tr>
-  //     );
-  //   }
-  // }
-
-  // return (
-  //   <table
-  //     border="1"
-  //     cellPadding="10"
-  //     style={{ margin: "20px auto", borderCollapse: "collapse", width: "50%" }}
-  //   >
-  //     <thead>
-  //       <tr>
-  //         <th>Stat</th>
-  //         <th>Value</th>
-  //       </tr>
-  //     </thead>
-  //     <tbody>{rows}</tbody>
-  //   </table>
-  // );
 }
 
 export default StatsTable;

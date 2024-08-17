@@ -21,7 +21,7 @@ function StatsPage() {
   return (
     <>
       <div className="stats">
-        <StatsTable stats={playerAggregateStats} />
+        <StatsTable stats={playerAggregateStats} className="stats" />
         <button className="profile__button" onClick={handleClick}>
           Add Stat
         </button>

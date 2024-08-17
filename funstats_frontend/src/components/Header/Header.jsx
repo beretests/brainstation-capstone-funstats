@@ -17,23 +17,14 @@ function Header() {
       </NavLink>
       {/* </div> */}
       <div className="header__links">
-        <NavLink
-          to="/"
-          className={
-            active ? "header__item header__item--active" : "header__item"
-          }
-        >
-          Home
-        </NavLink>
-
-        <NavLink
+        {/* <NavLink
           to="/player/:id"
           className={
             active ? "header__item header__item--active" : "header__item"
           }
         >
           Profile
-        </NavLink>
+        </NavLink> */}
         <NavLink
           to="/player/:id/stats"
           className={

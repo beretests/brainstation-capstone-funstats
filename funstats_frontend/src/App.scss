@@ -6,6 +6,7 @@ html {
   box-sizing: border-box;
   font-family: "Fredoka", sans-serif;
   // display: flex;
+  // width: 100%;
 
   *,
   *::before,
@@ -36,6 +37,7 @@ a {
 
 :root {
   background-color: $columbia-blue;
+  width: 100%;
   // filt
 
   // font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

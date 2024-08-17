@@ -53,13 +53,11 @@
   font-size: 11px;
   line-height: 16px;
   font-weight: 600;
-  // color: $slate;
 
   @include tablet {
     font-size: 12px;
     line-height: 18px;
     font-weight: 600;
-    // color: $cloud;
   }
 }
 
