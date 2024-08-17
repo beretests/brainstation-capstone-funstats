@@ -1,30 +1,29 @@
 import "./Header.scss";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
+import HamburgerMenu from "../HamburgerMenu/HamburgerMenu";
 
 function Header() {
-  const [active, setActive] = useState(false);
   return (
     <header className="header">
-      {/* <div className="header__logo"> */}
-      <NavLink to="/" className="header__logo">
+      <Link to="/" className="header__logo">
         <img
           className="header__logo-image"
           src="/funstats-logo-raisinblack.png"
           alt="FunStats logo"
         />
         <h1 className="header__title">FunStats</h1>
-      </NavLink>
-      {/* </div> */}
-      <div className="header__links">
-        {/* <NavLink
+      </Link>
+      <HamburgerMenu />
+      {/* <div className="header__links">
+        <NavLink
           to="/player/:id"
           className={
             active ? "header__item header__item--active" : "header__item"
           }
         >
           Profile
-        </NavLink> */}
+        </NavLink>
         <NavLink
           to="/player/:id/stats"
           className={
@@ -49,7 +48,7 @@ function Header() {
         >
           Login
         </NavLink>
-      </div>
+      </div> */}
     </header>
   );
 }
