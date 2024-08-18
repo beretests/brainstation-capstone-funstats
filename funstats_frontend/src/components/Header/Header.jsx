@@ -1,9 +1,12 @@
 import "./Header.scss";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { useState } from "react";
 import HamburgerMenu from "../HamburgerMenu/HamburgerMenu";
+import ListGroup from "react-bootstrap/ListGroup";
 
 function Header() {
+  // const [active, setActive] = useState(false);
+
   return (
     <header className="header">
       <Link to="/" className="header__logo">
@@ -14,41 +17,67 @@ function Header() {
         />
         <h1 className="header__title">FunStats</h1>
       </Link>
-      <HamburgerMenu />
-      {/* <div className="header__links">
+      {/* <HamburgerMenu /> */}
+      {/* <div className="header__links"> */}
+      <nav className="header__links">
         <NavLink
           to="/player/:id"
-          className={
-            active ? "header__item header__item--active" : "header__item"
+          className={(isActive) =>
+            "header__item" + (isActive ? "header__item--active" : "")
           }
         >
           Profile
         </NavLink>
         <NavLink
           to="/player/:id/stats"
-          className={
-            active ? "header__item header__item--active" : "header__item"
+          className={(isActive) =>
+            "header__item" + (isActive ? "header__item--active" : "")
           }
         >
           Stats
         </NavLink>
         <NavLink
+          to="/contact"
+          className={(isActive) =>
+            "header__item" + (isActive ? "header__item--active" : "")
+          }
+        >
+          Friends
+        </NavLink>
+      </nav>
+      {/* <Link
+          to="/player/:id"
+          className={
+            active ? "header__item header__item--active" : "header__item"
+          }
+        >
+          Profile
+        </Link>
+        <Link
+          to="/player/:id/stats"
+          className={
+            active ? "header__item header__item--active" : "header__item"
+          }
+        >
+          Stats
+        </Link>
+        <Link
           to="/player/:id/friends"
           className={
             active ? "header__item header__item--active" : "header__item"
           }
         >
           Friends
-        </NavLink>
-        <NavLink
+        </Link> */}
+      {/* <Link
           to="/player/:id"
           className={
             active ? "header__item header__item--active" : "header__item"
           }
         >
           Login
-        </NavLink>
-      </div> */}
+        </Link> */}
+      {/* </div> */}
     </header>
   );
 }

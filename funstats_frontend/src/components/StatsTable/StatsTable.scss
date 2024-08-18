@@ -1,18 +1,19 @@
 @use "@/styles/partials/variables" as *;
 @use "@/styles/partials/mixins" as *;
 
-.stats {
+.stats-stack {
   // padding: 2rem;
   &__header {
     display: flex;
     justify-content: space-between;
-    padding: 1rem;
+    // padding: 1rem;
     // flex-direction: row;
   }
 
   &__title {
     // display: inline;
     // flex: 1;
+    padding-bottom: 1rem;
   }
 
   &__rows {
@@ -28,20 +29,24 @@
   }
 
   &__name {
-    padding: 1rem 1rem;
+    padding: 0.5rem 1rem;
     background: $gradient-left;
     border-radius: 30px;
-    text-transform: uppercase;
+    text-transform: capitalize;
     color: $raisin-black;
     font-size: 1rem;
+    height: fit-content;
   }
 
   &__value {
-    padding: 1rem 3rem;
+    padding: 0.5rem 2rem;
     background: $gradient-left;
     border-radius: 30px;
-    color: #32383d;
+    color: rgb(92, 65, 93);
     @include responsive_body_large;
     font-weight: bold;
+    // font-size: 1.rem;
+    height: fit-content;
+    text-align: center;
   }
 }

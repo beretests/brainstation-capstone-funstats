@@ -9,9 +9,28 @@ const router = express.Router();
 
 function authorize(req, res, next) {
   try {
-    const payload = jwt.verify(token, JWT_KEY);
-    req.player = payload;
-    next();
+    // const token = req.headers["authorization"];
+    // if (!token) return res.status(401).json({ message: "Token required" });
+
+    // jwt.verify(token, JWT_SECRET, (err, player) => {
+    //   if (err) return res.status(403).json({ message: "Invalid token" });
+    //   req.player = player;
+    //   next();
+    // });
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
+
+    if (token == null) return res.sendStatus(401);
+
+    jwt.verify(token, process.env.JWT_KEY, (err, player) => {
+      if (err) return res.sendStatus(403);
+      req.player = player;
+      next();
+    });
+
+    // const payload = jwt.verify(token, process.env.JWT_KEY);
+    // req.playerId = payload.id;
+    // next();
   } catch (err) {
     res.sendStatus(401);
   }
@@ -42,43 +61,40 @@ router.post("/login", async (req, res) => {
   if (!player) {
     return res.status(401).send("Invalid username");
   }
-  if (password !== user.password) {
-    return res.status(401).send("Invalid password");
-  }
+  // if (password !== player.password) {
+  //   return res.status(401).send("Invalid password");
+  // }
   console.log(player);
 
   const token = jwt.sign(
     {
       id: player.id,
       username: player.username,
-      name: player.name,
-      age: player.DOB,
-      profile_pic: player.profile_pic,
-      position: player.position,
     },
     process.env.JWT_KEY,
     {
       expiresIn: "24h",
     }
   );
-  res.send(token);
+  res.send({ token: token, id: player.id });
 });
 
-router.get("/profile", authorize, (req, res) => {
-  if (!req.headers.authorization) {
-    return res.status(400).send("Please add authorization");
+router.get("/profile", authorize, async (req, res) => {
+  try {
+    const player = await knex("players").where({ id: req.player.id }).first();
+    if (!player) return res.status(404).json({ error: "Player not found" });
+
+    res.json({
+      id: player.id,
+      username: player.username,
+      profile_pic: player.profile_pic,
+      DOB: player.DOB,
+      name: player.name,
+      position: player.position,
+    });
+  } catch (err) {
+    res.status(500).json({ error: "Something went wrong" });
   }
-
-  const authHeader = req.headers.authorization;
-  const authToken = authHeader.split(" ")[1];
-
-  const decodedToken = jwt.verify(authToken, JWT_KEY);
-
-  const player = decodedToken.name;
-  // res.send(user);
-
-  res.json(player);
-  // res.json(req.decoded);
 });
 
 export default router;

@@ -17,7 +17,7 @@
     // width: 100%;
     display: flex;
     position: relative;
-    margin: 10px;
+    margin: 10px 0;
     // align-items: center;
     // padding-top: 0.5rem;
     // margin-top: 0.5rem;
@@ -49,8 +49,17 @@
   &__links {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 1rem;
-    padding-bottom: 0.5rem;
+    padding-bottom: 1rem;
+  }
+
+  &__item {
+    color: blue;
+
+    &--active {
+      color: red;
+    }
   }
 
   &__menu {

@@ -1,10 +1,15 @@
 @use "@/styles/partials/variables" as *;
 @use "@/styles/partials/mixins" as *;
 @use "@/styles/partials/typography" as *;
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
 
 html {
   box-sizing: border-box;
   font-family: "Fredoka", sans-serif;
+  background-color: $columbia-blue;
+  //
+  /* The following line can be included in a src/App.scss */
+
   // display: flex;
   // width: 100%;
 
@@ -36,7 +41,7 @@ a {
 }
 
 :root {
-  background-color: $columbia-blue;
+  // background-color: $columbia-blue;
   width: 100%;
   // filt
 
