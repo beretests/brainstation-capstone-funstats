@@ -16,6 +16,8 @@ export const singlePlayer = async (req, res) => {
 export const playerStatAggregates = async (req, res) => {
   try {
     const data = await knex("stats")
+      .join("players", "stats.player_id", "=", "players.id")
+      .select("players.name", "players.profile_pic", "players.id")
       .where({ player_id: req.params.id })
       .sum({
         goals_scored: "goals_scored",
@@ -30,7 +32,7 @@ export const playerStatAggregates = async (req, res) => {
         headers_won: "headers_won",
         offsides: "offsides",
       })
-      .first();
+      .groupBy("players.name", "players.profile_pic", "players.id");
 
     if (!data) {
       return res
@@ -61,6 +63,20 @@ export const addStat = async (req, res) => {
   }
 };
 
+// export const compareStat = async (req, res) => {
+//   try {
+//     const stats = await knex("stats")
+//       .join("players", "stats.player_id", "=", "players.id")
+//       .distinct("players.name", "players.profile_pic", "stats.*")
+//       .select("players.name", "players.profile_pic", "stats.*")
+//       .where({ player_id: req.params.id })
+//       .orWhere({ player_id: req.params.friendId });
+//     res.status(200).json(stats);
+//   } catch (error) {
+//     res.status(500).json({ message: `Unable to get stats: ${error}` });
+//   }
+// };
+
 // export const addPlayer = async (req, res) => {
 //   const { username, name, password, DOB, position } = req.body;
 
@@ -86,6 +102,33 @@ export const updatePlayer = async (req, res) => {
     res.status(204).json("Successfully updated player");
   } catch (error) {
     res.status(500).json({ message: `Unable to update player: ${error}` });
+  }
+};
+
+export const compareStat = async (req, res) => {
+  try {
+    const stats = await knex("stats")
+      .join("players", "stats.player_id", "=", "players.id")
+      .select("players.name", "players.profile_pic", "players.id")
+      .where({ player_id: req.params.id })
+      .orWhere({ player_id: req.params.friendId })
+      .sum({
+        goals_scored: "goals_scored",
+        assists: "assists",
+        shots_on_target: "shots_on_target",
+        tackles: "tackles",
+        interceptions: "interceptions",
+        saves: "saves",
+        yellow_cards: "yellow_cards",
+        red_cards: "red_cards",
+        fouls: "fouls",
+        headers_won: "headers_won",
+        offsides: "offsides",
+      })
+      .groupBy("players.name", "players.profile_pic", "players.id");
+    res.status(200).json(stats);
+  } catch (error) {
+    res.status(500).json({ message: `Unable to get stats: ${error}` });
   }
 };
 
