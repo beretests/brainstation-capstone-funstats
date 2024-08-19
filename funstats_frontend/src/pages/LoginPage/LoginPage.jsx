@@ -18,20 +18,21 @@ function LoginPage({ setIsLoggedIn }) {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log(e.currentTarget.formBasicUsername.value);
+    // console.log(e.currentTarget.formBasicUsername.value);
 
     try {
       const response = await axios.post(loginUrl, {
         username: e.currentTarget.formBasicUsername.value,
         password: e.currentTarget.formBasicPassword.value,
       });
-      console.log(response);
+      // console.log(response);
       sessionStorage.setItem("JWTtoken", response.data.token);
+      sessionStorage.setItem("userId", response.data.id);
       const id = response.data.id;
 
-      setIsLoggedIn(true);
-      setIsLoginError(false);
-      setErrorMessage("");
+      // setIsLoggedIn(true);
+      // setIsLoginError(false);
+      // setErrorMessage("");
       navigate(`/player/${id}`);
     } catch (error) {
       setIsLoginError(true);

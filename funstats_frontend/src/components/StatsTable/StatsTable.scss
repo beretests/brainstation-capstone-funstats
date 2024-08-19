@@ -30,7 +30,7 @@
 
   &__name {
     padding: 0.5rem 1rem;
-    background: $gradient-left;
+    // background: $gradient-left;
     border-radius: 30px;
     text-transform: capitalize;
     color: $raisin-black;
@@ -40,7 +40,7 @@
 
   &__value {
     padding: 0.5rem 2rem;
-    background: $gradient-left;
+    // background: $gradient-left;
     border-radius: 30px;
     color: rgb(92, 65, 93);
     @include responsive_body_large;

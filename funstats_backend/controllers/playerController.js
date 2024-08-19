@@ -40,7 +40,7 @@ export const playerStatAggregates = async (req, res) => {
         .send(`Player id: ${req.params.id} has no stats added yet.`);
     }
 
-    res.json(data);
+    res.json(data[0]);
   } catch (err) {
     res.status(400).send(`Error retrieving stats: ${err}`);
   }
@@ -77,22 +77,32 @@ export const addStat = async (req, res) => {
 //   }
 // };
 
-// export const addPlayer = async (req, res) => {
-//   const { username, name, password, DOB, position } = req.body;
+export const addPlayer = async (req, res) => {
+  const { username, name, password, DOB, position } = req.body;
 
-//   if (!username || !name || !password || !DOB || !position) {
-//     return res.status(400).json({
-//       message: "Please provide all required information",
-//     });
-//   }
+  // if (!username || !name || !password || !DOB || !position) {
+  //   return res.status(400).json({
+  //     message: "Please provide all required information",
+  //   });
+  // }
+  const newPlayer = {
+    username,
+    name,
+    password,
+    DOB,
+    position,
+    profile_pic:
+      "https://funstats-images.beretesting.com/default_profile_pic.jpg",
+  };
 
-//   try {
-//     const data = await knex("players").insert(req.body);
-//     res.status(201).json("Successfully created player");
-//   } catch (error) {
-//     res.status(500).json({ message: `Unable to create player: ${error}` });
-//   }
-// };
+  try {
+    const response = await knex("players").insert(newPlayer);
+    // const addedPlayer = await knex("players").where({ id: response[0] });
+    res.status(201).json("Successfully added new player");
+  } catch (error) {
+    res.status(500).json({ message: `Unable to create player: ${error}` });
+  }
+};
 
 export const updatePlayer = async (req, res) => {
   try {
@@ -163,16 +173,16 @@ export const getFriends = async (req, res) => {
 export const addFriend = async (req, res) => {
   const { username } = req.body;
 
-  if (!username) {
-    return res.status(400).json({
-      message: "Please provide your friend's username",
-    });
-  }
+  // if (!username) {
+  //   return res.status(400).json({
+  //     message: "Please provide your friend's username",
+  //   });
+  // }
 
   try {
     const friend = await knex("players")
       .select("id")
-      .where("username", username);
+      .where("username", "=", username);
 
     const [player1_id, player2_id] = [friend[0].id, req.params.id].sort();
 

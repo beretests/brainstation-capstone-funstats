@@ -1,12 +1,12 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getFriends } from "../../utils/getAggregateStats";
 import "./ProfilePage.scss";
 import { getAge } from "../../utils/getAge";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
 import FriendsList from "../../components/FriendsList/FriendsList";
+import { Stack, Card, Button } from "react-bootstrap";
 
 function ProfilePage() {
   const { id } = useParams();
@@ -41,21 +41,19 @@ function ProfilePage() {
   }, [token]);
 
   // useEffect(() => {
-  //   getFriends(id, setFriends);
-  //   console.log("Friends: ", friends);
-  // }, [isVisible]);
+  //   handleViewFriends();
+  // }, [friends]);
 
-  const handleViewStats = (id) => {
-    navigate(`/player/${id}/stats`);
+  const handleCompareStats = async (id, friendId) => {
+    navigate(`/player/${id}/stats/compare/${friendId}`);
   };
 
   const handleViewFriends = async () => {
     if (!isVisible) {
       try {
         const response = await axios.get(friendUrl);
-        // console.log("STATS: ", response);
         setFriends([...friends, ...response.data]);
-        console.log("Friends: ", friends[0]);
+        // console.log("Friends: ", friends[0]);
 
         setIsVisible(true);
       } catch (err) {
@@ -64,8 +62,6 @@ function ProfilePage() {
     } else {
       setFriends([]);
     }
-
-    // console.log("Friends: ", response.data);
   };
 
   const toggleShow = async () => {
@@ -84,35 +80,43 @@ function ProfilePage() {
 
   return (
     <>
+      <h2 className="profile__heading">{`${profileData.name}'s Profile`}</h2>
+
       <div className="profile">
-        <div>
-          <div className="profile__image-container">
-            <img
-              src={profileData.profile_pic}
-              alt={profileData.name}
-              className="profile__image"
-            />
-          </div>
-          <div className="profile__details">
-            <p className="profile__name">{profileData.name}</p>
-            <p className="profile__age">{getAge(profileData.DOB)}</p>
-            <p className="profile__position">{profileData.position}</p>
-            <div className="profile__button-layout">
-              <button
-                className="profile__button"
-                onClick={() => handleViewStats(id)}
-              >
+        <Card>
+          <Card.Img
+            variant="top"
+            src={profileData.profile_pic}
+            alt={profileData.name}
+          />
+          <Card.Body>
+            <Card.Title>{profileData.name}</Card.Title>
+            <Card.Text>
+              <strong>Age:</strong> {getAge(profileData.DOB)}
+              <br />
+              <strong>Position:</strong> {profileData.position}
+              <br />
+            </Card.Text>
+            <Stack gap={2} className="col-md-5 mx-auto">
+              <Button href={`/player/${id}/stats`} variant="primary">
                 View Stats
-              </button>
-              <button className="profile__button" onClick={() => toggleShow()}>
+              </Button>
+              <Button variant="primary" onClick={() => toggleShow()}>
                 View Friends
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="friendlist">
-          {isVisible && <FriendsList friends={friends} getAge={getAge} />}
-        </div>
+              </Button>
+            </Stack>
+          </Card.Body>
+        </Card>
+      </div>
+      <div className="friendlist">
+        {isVisible && (
+          <FriendsList
+            friends={friends}
+            getAge={getAge}
+            handleCompareStats={handleCompareStats}
+            id={id}
+          />
+        )}
       </div>
     </>
   );

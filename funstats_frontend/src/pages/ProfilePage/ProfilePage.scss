@@ -4,66 +4,78 @@
 
 .profile {
   text-align: center;
-  width: 100vw;
+  // width: 100vw;
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 1rem 1rem 2rem;
   align-items: center;
   justify-content: center;
+  background-color: $columbia-blue;
 
   @include tablet {
     flex-direction: row;
   }
-  &__image-container {
-    // width: 40%;
-    overflow: hidden;
-    border: 5px solid $dim-gray;
-    border-radius: 10px;
-    height: 23rem;
-    width: 100%;
-  }
 
-  &__image {
-    object-fit: cover;
-    height: 23rem;
-
-    width: 100%;
-  }
-
-  &__button-layout {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-  }
-
-  &__details {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  &__name {
-    font-size: 2rem;
-    margin-top: 2rem;
+  &__heading {
     padding: 1rem;
-    font-weight: bold;
-    color: $stats-text;
-    width: fit-content;
-    background-color: $cool-gray;
-    border-radius: 10px;
+    text-align: center;
+    background-color: $columbia-blue;
   }
+  // &__image-container {
+  //   // width: 40%;
+  //   overflow: hidden;
+  //   border: 5px solid $dim-gray;
+  //   border-radius: 10px;
+  //   height: 23rem;
+  //   width: 100%;
+  // }
 
-  &__age {
-    font-size: 1.5rem;
-  }
+  // &__image {
+  //   object-fit: cover;
+  //   height: 23rem;
 
-  &__position {
-    font-size: 1.5rem;
-    padding: 1rem;
-  }
+  //   width: 100%;
+  // }
+
+  // &__button-layout {
+  //   display: flex;
+  //   gap: 1rem;
+  //   justify-content: center;
+  // }
+
+  // &__details {
+  //   display: flex;
+  //   flex-direction: column;
+  //   justify-content: center;
+  //   align-items: center;
+  // }
+
+  // &__name {
+  //   font-size: 2rem;
+  //   margin-top: 2rem;
+  //   padding: 1rem;
+  //   font-weight: bold;
+  //   color: $stats-text;
+  //   width: fit-content;
+  //   background-color: $cool-gray;
+  //   border-radius: 10px;
+  // }
+
+  // &__age {
+  //   font-size: 1.5rem;
+  // }
+
+  // &__position {
+  //   font-size: 1.5rem;
+  //   padding: 1rem;
+  // }
 
   &__button {
     @include button;
   }
+}
+
+.friendlist {
+  padding: 1rem;
+  background-color: $columbia-blue;
 }

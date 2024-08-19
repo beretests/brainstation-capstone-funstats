@@ -1,52 +1,145 @@
 import "./SignUpPage.scss";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Button, Col, Form, Row } from "react-bootstrap";
+import { positions } from "../../data/data";
 
 function SignUpPage() {
-  const [isSignedUp, setIsSignedUp] = useState(false);
+  // const [isSignedUp, setIsSignedUp] = useState(false);
+  const [formData, setFormData] = useState({
+    DOB: "",
+    username: "",
+    name: "",
+    password: "",
+    position: "Goalkeeper",
+  });
   const url = import.meta.env.VITE_API_URL;
-  const signupUrl = `${url}/signup`;
+  const signupUrl = `${url}/player/add`;
+  const navigate = useNavigate();
+
+  const handleUsernameChange = (e) => {
+    setFormData({ ...formData, username: e.target.value });
+  };
+
+  const handleNameChange = (e) => {
+    const name =
+      e.target.value.charAt(0).toUpperCase() +
+      e.target.value.slice(1).toLowerCase();
+    setFormData({ ...formData, name: name });
+  };
+
+  const handlePasswordChange = (e) => {
+    setFormData({ ...formData, password: e.target.value });
+  };
+
+  const handleDateChange = (e) => {
+    setFormData({
+      ...formData,
+      DOB: Math.floor(new Date(e.target.value).getTime() / 1000),
+    });
+  };
+
+  const handleSelectChange = (e) => {
+    setFormData({ ...formData, position: e.target.value });
+  };
 
   const handleSignup = async (e) => {
     e.preventDefault();
 
     try {
-      await axios.post(signupUrl, {
-        username: e.target.username.value,
-        name: e.target.name.value,
-        password: e.target.password.value,
-        DOB: e.target.date.value,
-        position: e.target.position.value,
-      });
-      setIsSignedUp(true);
+      console.log("Form Data: ", JSON.stringify(formData));
+      await axios.post(signupUrl, formData);
+      // e.currentTarget.reset();
+      navigate("/");
+      // setIsSignedUp(true);
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <div>
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSignup}>
-        <div className="form-group">
-          Username: <input type="text" name="username" />
-        </div>
-        <div className="form-group">
-          Name: <input type="text" name="name" />
-        </div>
-        <div className="form-group">
-          Password: <input type="password" name="password" />
-        </div>
-        <div className="form-group">
-          Date of Birth: <input type="date" name="date" />
-        </div>
-        <div className="form-group">
-          Position: <input type="select" name="position" />
-        </div>
-        <button className="btn btn-primary" type="submit">
-          Signup
-        </button>
-      </form>
+    <div className="signup">
+      <h2 className="signup__heading">Sign Up</h2>
+      <Form onSubmit={handleSignup}>
+        <Form.Group as={Row} className="mb-3" controlId="formUsername">
+          <Form.Label column sm={2}>
+            Username
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Control
+              type="text"
+              placeholder="Username"
+              onChange={handleUsernameChange}
+            />
+          </Col>
+        </Form.Group>
+
+        <Form.Group as={Row} className="mb-3" controlId="formName">
+          <Form.Label column sm={2}>
+            Full Name
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Control
+              type="text"
+              placeholder=" Full Name"
+              onChange={handleNameChange}
+            />
+          </Col>
+        </Form.Group>
+
+        <Form.Group as={Row} className="mb-3" controlId="formPassword">
+          <Form.Label column sm={2}>
+            Password
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              onChange={handlePasswordChange}
+            />
+          </Col>
+        </Form.Group>
+
+        <Form.Group as={Row} className="mb-3" controlId="formDate">
+          <Form.Label column sm={2}>
+            Date of Birth
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Control type="date" onChange={handleDateChange} />
+          </Col>
+        </Form.Group>
+
+        <Form.Group as={Row} className="mb-3" controlId="formPosition">
+          <Form.Label column sm={2}>
+            Position
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Select onChange={handleSelectChange}>
+              {positions.map((position, index) => (
+                <option key={index} value={position.value}>
+                  {position.label}
+                </option>
+              ))}
+            </Form.Select>
+          </Col>
+        </Form.Group>
+
+        <Form.Group as={Row} className="mb-3" controlId="formPicture">
+          <Form.Label column sm={2}>
+            Upload picture
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Control type="file" />
+          </Col>
+        </Form.Group>
+
+        <Form.Group as={Row} className="mb-3">
+          <Col sm={{ span: 10, offset: 2 }}>
+            <Button type="submit">Sign up</Button>
+          </Col>
+        </Form.Group>
+      </Form>
     </div>
   );
 }

@@ -1,17 +1,15 @@
-// import DatePicker from "react-datepicker";
 import "./AddStatsForm.scss";
 import { useState, useEffect } from "react";
 import Select from "react-select";
 import { options } from "../../data/data";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
-import Alert from "../Alert/Alert";
 import { getAggregateStats } from "../../utils/getAggregateStats";
 
 function AddStatsForm({ setPlayerAggregateStats, setIsVisible }) {
   const { id } = useParams();
   const url = import.meta.env.VITE_API_URL;
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [submitted, setSubmitted] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const today = new Date().toISOString().split("T")[0];
@@ -112,11 +110,7 @@ function AddStatsForm({ setPlayerAggregateStats, setIsVisible }) {
         await axios.post(`${url}/player/${id}/stats/add`, formData);
         setSubmitted(true);
         alert("Successfully added stat");
-        // <Alert
-        //   message="This is a success alert!"
-        //   type="success"
-        //   duration={5000}
-        // />;
+
         setIsVisible(false);
         event.target.reset();
       } catch (err) {

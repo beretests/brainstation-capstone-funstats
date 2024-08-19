@@ -26,13 +26,19 @@ export const options = [
 // ];
 
 export const positions = [
-  "Goalkeeper",
-  "Center Back",
-  "Full Back",
-  "Central Defensive Midfielder",
-  "Central Midfielder",
-  "Central Attacking Midfielder",
-  "Winger",
-  "Striker",
-  "Center Forward",
+  { value: "Goalkeeper", label: "Goalkeeper" },
+  { value: "Center Back", label: "Center Back" },
+  { value: "Full Back", label: "Full Back" },
+  {
+    value: "Central Defensive Midfielder",
+    label: "Central Defensive Midfielder",
+  },
+  { value: "Central Midfielder", label: "Central Midfielder" },
+  {
+    value: "Central Attacking Midfielder",
+    label: "Central Attacking Midfielder",
+  },
+  { value: "Winger", label: "Winger" },
+  { value: "Striker", label: "Striker" },
+  { value: "Center Forward", label: "Center Forward" },
 ];
