@@ -1,0 +1,31 @@
+@use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
+
+.friends {
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  // background-color: $columbia-blue;
+
+  @include tablet {
+    flex-flow: row wrap;
+    gap: 1rem;
+    justify-content: space-around;
+  }
+
+  &__heading {
+    padding: 2rem;
+    text-align: center;
+  }
+
+  &__stack {
+  }
+}
+
+.friends-container {
+  border-top: 1px solid $dim-gray;
+
+  @include tablet {
+    border-top: none;
+  }
+}
