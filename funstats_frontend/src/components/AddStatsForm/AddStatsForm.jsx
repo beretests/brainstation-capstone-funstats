@@ -1,192 +1,134 @@
 import "./AddStatsForm.scss";
-import { useState, useEffect } from "react";
-import Select from "react-select";
+import { useState } from "react";
 import { options } from "../../data/data";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { getAggregateStats } from "../../utils/getAggregateStats";
+import { Form, Button } from "react-bootstrap";
 
-function AddStatsForm({ setPlayerAggregateStats, setIsVisible }) {
+function AddStatsForm({ setStatAdded, setIsVisible, setShowAlert }) {
   const { id } = useParams();
   const url = import.meta.env.VITE_API_URL;
-  // const navigate = useNavigate();
-  const [submitted, setSubmitted] = useState(false);
-  const [selectedOptions, setSelectedOptions] = useState([]);
   const today = new Date().toISOString().split("T")[0];
-
-  const errorMessages = {
-    date: "",
-    game: "",
-  };
-  const [errors, setErrors] = useState(errorMessages);
-
-  useEffect(() => {
-    if (submitted) {
-      getAggregateStats(id, setPlayerAggregateStats);
-    }
-  }, [submitted]);
-
-  const convertDateToEpoch = (obj) => {
-    if (obj.date && isNaN(obj.date)) {
-      const date = new Date(obj.date);
-      obj.date = Math.floor(date.getTime() / 1000);
-    } else {
-      console.error("The object does not contain a valid date property.");
-    }
-    return obj;
-  };
 
   const [formData, setFormData] = useState({
     player_id: id,
     date: today,
     game: "",
+    selectedOptions: [],
+    optionValues: {},
   });
 
-  const validateDate = (date) => {
-    if (!date || new Date(date) > new Date(today)) {
-      return "The date is required and cannot be in the future.";
-    }
-    return "";
+  const handleSelectChange = (e) => {
+    const selectedOptions = Array.from(
+      e.target.selectedOptions,
+      (option) => option.value
+    );
+    setFormData({ ...formData, selectedOptions });
   };
 
-  const validateGame = (game) => {
-    if (!game) {
-      return "Please enter the game played.";
-    }
-    return "";
-  };
-
-  const handleSelectChange = (selected) => {
-    setSelectedOptions(selected);
-  };
-
-  const handleKeyDown = (event) => {
-    if (["e", "-", "+"].includes(event.key)) {
-      event.preventDefault();
-    }
-  };
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
+  const handleOptionValueChange = (option, e) => {
     setFormData({
       ...formData,
-      [name]: value,
+      optionValues: {
+        ...formData.optionValues,
+        [option]: e.target.value,
+      },
     });
   };
 
   const handleDateChange = (event) => {
     const { value } = event.target;
-    const errorMessage = validateDate(value);
     setFormData({
       ...formData,
       date: value,
     });
-    setErrors({ ...errors, date: errorMessage });
   };
 
   const handleGameChange = (event) => {
     const { value } = event.target;
-    const errorMessage = validateGame(value);
     setFormData({ ...formData, game: value });
-    setErrors({ ...errors, game: errorMessage });
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const epochDate = Math.floor(new Date(formData.date).getTime() / 1000);
+    const finalFormData = {
+      ...formData,
+      date: epochDate,
+      ...formData.optionValues,
+    };
+    delete finalFormData.optionValues;
+    delete finalFormData.selectedOptions;
 
-    const dateError = validateDate(formData.date);
-    const gameError = validateGame(formData.game);
-
-    if (dateError || gameError) {
-      setErrors({
-        date: dateError,
-        game: gameError,
-      });
-      console.log("Form contains errors.");
-    } else {
-      console.log(convertDateToEpoch(formData));
-
-      try {
-        await axios.post(`${url}/player/${id}/stats/add`, formData);
-        setSubmitted(true);
-        alert("Successfully added stat");
-
-        setIsVisible(false);
-        event.target.reset();
-      } catch (err) {
-        console.log("Error adding stat: ", err);
-        alert("Error adding stat!");
-      }
-      console.log("Form submitted successfully with data:", formData);
+    try {
+      await axios.post(`${url}/player/${id}/stats/add`, finalFormData);
+      setStatAdded(true);
+      setIsVisible(false);
+      setShowAlert(true);
+    } catch (err) {
+      console.log("Error adding stat: ", err);
+      alert("Error adding stat!");
     }
   };
 
   return (
     <>
       <section className="stats">
-        <h2 className="stats__title">Stats</h2>
-        <form className="form" onSubmit={handleSubmit}>
-          <div className="form__input-group">
-            <label htmlFor="date" className="form__label">
-              Date
-            </label>
-            <div className="input">
-              <input
-                type="date"
-                id="date"
-                value={formData.date}
-                max={today}
-                onChange={handleDateChange}
-              />
-              {errors.date && <p className="form__error">{errors.date}</p>}
-            </div>
-          </div>
-          <div className="form__input-group">
-            <label htmlFor="game" className="form__label">
-              Game
-            </label>
-            <div className="input">
-              <input
-                name="game"
-                id="game"
-                type="text"
-                className="form__input"
-                onChange={handleGameChange}
-              />
-              {errors.game && <p className="form__error">{errors.game}</p>}
-            </div>
-          </div>
-          <div className="form__input-group">
-            <p className="form__label">Select stat:</p>
-            <div className="input">
-              <Select
-                options={options}
-                isMulti
-                name="selectStats"
-                id="selectStats"
-                onChange={handleSelectChange}
-                placeholder="Select stats"
-              />
-              {selectedOptions.map((option) => (
-                <div key={option.value} style={{ marginBottom: "10px" }}>
-                  <label htmlFor={option.value}>{option.label}</label>
-                  <input
-                    type="number"
-                    id={option.value}
-                    name={option.value}
-                    value={formData[option.value] || ""}
-                    onChange={(event) => handleInputChange(event, option.value)}
-                    onKeyDown={handleKeyDown}
-                  />
-                </div>
+        <h3 className="stats__title">Enter new game stat</h3>
+        <Form onSubmit={handleSubmit} className="stats__form-add">
+          <Form.Group className="mb-3" controlId="formDate">
+            <Form.Label className="stats__date-label">DATE</Form.Label>
+            <Form.Control
+              type="date"
+              value={formData.date}
+              max={today}
+              onChange={handleDateChange}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formGame">
+            <Form.Label>GAME</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter name of game"
+              onChange={handleGameChange}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formStat">
+            <Form.Label>SELECT STAT TO ADD:</Form.Label>
+            <Form.Select
+              multiple
+              onChange={handleSelectChange}
+              placeholder="Select stats"
+            >
+              {options.map((stat, index) => (
+                <option key={index} value={stat.value}>
+                  {stat.label}
+                </option>
               ))}
-            </div>
-          </div>
-          <div className="stats__buttons">
-            <button className="profile__button">Cancel</button>
-            <button className="profile__button">Add Stats</button>
-          </div>
-        </form>
+            </Form.Select>
+          </Form.Group>
+
+          {formData.selectedOptions.map((option) => (
+            <Form.Group controlId={`formOptionValue-${option}`} key={option}>
+              <Form.Label>{option.replace(/_/g, " ").toUpperCase()}</Form.Label>
+              <Form.Control
+                type="number"
+                value={formData.optionValues[option] || ""}
+                onChange={(e) => handleOptionValueChange(option, e)}
+                className="stats__input"
+                required
+              />
+            </Form.Group>
+          ))}
+
+          <Form.Group className="mb-6 stats__button-container">
+            <Button type="submit" className="stats__button">
+              Add Stats
+            </Button>
+          </Form.Group>
+        </Form>
       </section>
     </>
   );

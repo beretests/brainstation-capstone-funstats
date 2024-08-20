@@ -17,6 +17,8 @@ function FriendsList({
   id,
   friendStats,
   setFriendStats,
+  setFriendAdded,
+  setShowAlert,
 }) {
   const url = import.meta.env.VITE_API_URL;
   const friendUrl = `${url}/player/${id}/friends`;
@@ -26,19 +28,11 @@ function FriendsList({
     setFriendUsername(e.target.value);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
     try {
-      // console.log("Form Data: ", JSON.stringify(formData));
-      console.log("F: ", friendUsername);
-
-      const friend = await axios.post(
-        friendUrl,
-        JSON.stringify(friendUsername)
-      );
-      console.log("F: ", friend);
-      // e.currentTarget.reset();
-      // navigate("/");
-      // setIsSignedUp(true);
+      await axios.post(friendUrl, { username: friendUsername });
+      setFriendAdded(true);
+      setShowAlert(true);
     } catch (error) {
       console.error(error);
     }

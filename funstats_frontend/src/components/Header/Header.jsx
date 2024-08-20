@@ -1,7 +1,14 @@
 import "./Header.scss";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 
 function Header({ id }) {
+  // const navigate = useNavigate();
+
+  // const handleLogout = () => {
+  //   sessionStorage.clear();
+  //   navigate("/");
+  // };
+
   return (
     <header className="header">
       <Link to="/" className="header__logo">
@@ -30,6 +37,15 @@ function Header({ id }) {
             }
           >
             Stats
+          </NavLink>
+          <NavLink
+            to={"/"}
+            className={(isActive) =>
+              "header__item" + (isActive ? "header__item--active" : "")
+            }
+            // onClick={handleLogout}
+          >
+            Logout
           </NavLink>
         </nav>
       ) : (

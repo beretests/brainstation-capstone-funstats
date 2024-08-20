@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
 import FriendsList from "../../components/FriendsList/FriendsList";
-import { Stack, Card, Button } from "react-bootstrap";
+import { Stack, Card, Button, Alert } from "react-bootstrap";
 
 function ProfilePage() {
   const { id } = useParams();
@@ -14,6 +14,8 @@ function ProfilePage() {
   const profileUrl = `${url}/profile`;
   const friendUrl = `${url}/player/${id}/friends`;
   const [friends, setFriends] = useState([]);
+  const [friendAdded, setFriendAdded] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   const navigate = useNavigate();
   const [profileData, setProfileData] = useState(null);
@@ -40,9 +42,15 @@ function ProfilePage() {
     getProfile();
   }, [token]);
 
-  // useEffect(() => {
-  //   handleViewFriends();
-  // }, [friends]);
+  useEffect(() => {
+    if (friendAdded) {
+      setIsVisible(false);
+      handleViewFriends();
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 5000);
+    }
+  }, [friendAdded]);
 
   const handleCompareStats = async (id, friendId) => {
     navigate(`/player/${id}/stats/compare/${friendId}`);
@@ -53,7 +61,6 @@ function ProfilePage() {
       try {
         const response = await axios.get(friendUrl);
         setFriends([...friends, ...response.data]);
-        // console.log("Friends: ", friends[0]);
 
         setIsVisible(true);
       } catch (err) {
@@ -81,42 +88,51 @@ function ProfilePage() {
   return (
     <>
       <h2 className="profile__heading">{`${profileData.name}'s Profile`}</h2>
-
-      <div className="profile">
-        <Card>
-          <Card.Img
-            variant="top"
-            src={profileData.profile_pic}
-            alt={profileData.name}
-          />
-          <Card.Body>
-            <Card.Title>{profileData.name}</Card.Title>
-            <Card.Text>
-              <strong>Age:</strong> {getAge(profileData.DOB)}
-              <br />
-              <strong>Position:</strong> {profileData.position}
-              <br />
-            </Card.Text>
-            <Stack gap={2} className="col-md-5 mx-auto">
-              <Button href={`/player/${id}/stats`} variant="primary">
-                View Stats
-              </Button>
-              <Button variant="primary" onClick={() => toggleShow()}>
-                View Friends
-              </Button>
-            </Stack>
-          </Card.Body>
-        </Card>
-      </div>
-      <div className="friendlist">
-        {isVisible && (
-          <FriendsList
-            friends={friends}
-            getAge={getAge}
-            handleCompareStats={handleCompareStats}
-            id={id}
-          />
-        )}
+      {showAlert && (
+        <Alert showAlert={showAlert} variant="success">
+          You successfully added a new friend! 🤝
+        </Alert>
+      )}
+      <div className="profile__container">
+        <div className="profile">
+          <Card className="profile__card">
+            <Card.Img
+              variant="top"
+              src={profileData.profile_pic}
+              alt={profileData.name}
+              className="profile__card-image"
+            />
+            <Card.Body className="profile__card-body">
+              <Card.Title>{profileData.name}</Card.Title>
+              <Card.Text>
+                <strong>Age:</strong> {getAge(profileData.DOB)}
+                <br />
+                <strong>Position:</strong> {profileData.position}
+                <br />
+              </Card.Text>
+              <Stack gap={2} className="col-md-5 mx-auto profile__stack">
+                <Button href={`/player/${id}/stats`} variant="primary">
+                  View Stats
+                </Button>
+                <Button variant="primary" onClick={() => toggleShow()}>
+                  View Friends
+                </Button>
+              </Stack>
+            </Card.Body>
+          </Card>
+        </div>
+        <div className="friendlist">
+          {isVisible && (
+            <FriendsList
+              friends={friends}
+              getAge={getAge}
+              handleCompareStats={handleCompareStats}
+              id={id}
+              setFriendAdded={setFriendAdded}
+              setShowAlert={setShowAlert}
+            />
+          )}
+        </div>
       </div>
     </>
   );

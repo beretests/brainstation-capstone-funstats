@@ -84,57 +84,16 @@ function StatStack({ friendStats }) {
             {friendStats.map((player) => (
               <Col xs={6} key={player.id}>
                 {player[stat]}{" "}
-                {parseInt(player[stat]) === maxValues[stat] && (
-                  <Badge bg="success">Top</Badge>
-                )}
+                {parseInt(player[stat]) === maxValues[stat] &&
+                  (stat !== "YELLOW CARDS" ||
+                    stat !== "RED CARDS" ||
+                    stat !== "OFFSIDES" ||
+                    stat !== "FOULS") && <Badge bg="success">🏆</Badge>}
               </Col>
             ))}
           </Row>
         ))}
       </div>
-
-      {/* <div>
-        {friendStats.map((player) => (
-          <Stack
-            direction="horizontal"
-            key={player.id}
-            gap={3}
-            className="mb-4 flex-wrap d-md-none"
-          >
-            <Image
-              src={player.profile_pic}
-              alt={player.name}
-              thumbnail
-              width={100}
-              height={100}
-            />
-            <Card>
-              <Card.Body>
-                <Card.Title>{player.name}</Card.Title>
-                <Table hover striped>
-                  <tbody>
-                    {Object.keys(maxValues).map((stat) => (
-                      <tr key={stat}>
-                        <td className="w-50">
-                          <strong>
-                            {stat.replace(/_/g, " ").toUpperCase()}
-                          </strong>
-                        </td>
-                        <td className="w-50">
-                          {player[stat]}{" "}
-                          {parseInt(player[stat]) === maxValues[stat] && (
-                            <Badge bg="success">Top</Badge>
-                          )}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
-              </Card.Body>
-            </Card>
-          </Stack>
-        ))}
-      </div> */}
 
       <div className="stack">
         {friendStats.map((player) => (
@@ -164,7 +123,7 @@ function StatStack({ friendStats }) {
                         {player.goals_scored}{" "}
                         {parseInt(player.goals_scored) ===
                           maxValues.goals_scored && (
-                          <Badge bg="success">Top</Badge>
+                          <Badge bg="success">🏆</Badge>
                         )}
                       </td>
                     </tr>
@@ -175,7 +134,7 @@ function StatStack({ friendStats }) {
                       <td>
                         {player.assists}{" "}
                         {parseInt(player.assists) === maxValues.assists && (
-                          <Badge bg="success">Top</Badge>
+                          <Badge bg="success">🏆</Badge>
                         )}
                       </td>
                     </tr>
@@ -187,7 +146,7 @@ function StatStack({ friendStats }) {
                         {player.shots_on_target}{" "}
                         {parseInt(player.shots_on_target) ===
                           maxValues.shots_on_target && (
-                          <Badge bg="success">Top</Badge>
+                          <Badge bg="success">🏆</Badge>
                         )}
                       </td>
                     </tr>
@@ -198,7 +157,7 @@ function StatStack({ friendStats }) {
                       <td>
                         {player.tackles}{" "}
                         {parseInt(player.tackles) === maxValues.tackles && (
-                          <Badge bg="success">Top</Badge>
+                          <Badge bg="success">🏆</Badge>
                         )}
                       </td>
                     </tr>
@@ -210,7 +169,7 @@ function StatStack({ friendStats }) {
                         {player.interceptions}{" "}
                         {parseInt(player.interceptions) ===
                           maxValues.interceptions && (
-                          <Badge bg="success">Top</Badge>
+                          <Badge bg="success">🏆</Badge>
                         )}
                       </td>
                     </tr>
@@ -221,7 +180,7 @@ function StatStack({ friendStats }) {
                       <td>
                         {player.saves}{" "}
                         {parseInt(player.saves) === maxValues.saves && (
-                          <Badge bg="success">Top</Badge>
+                          <Badge bg="success">🏆</Badge>
                         )}
                       </td>
                     </tr>
@@ -233,7 +192,7 @@ function StatStack({ friendStats }) {
                         {player.yellow_cards}{" "}
                         {parseInt(player.yellow_cards) ===
                           maxValues.yellow_cards && (
-                          <Badge bg="danger">Most</Badge>
+                          <Badge bg="danger">⚠️</Badge>
                         )}
                       </td>
                     </tr>
@@ -244,7 +203,7 @@ function StatStack({ friendStats }) {
                       <td>
                         {player.red_cards}{" "}
                         {parseInt(player.red_cards) === maxValues.red_cards && (
-                          <Badge bg="danger">Most</Badge>
+                          <Badge bg="danger">⚠️</Badge>
                         )}
                       </td>
                     </tr>
@@ -255,7 +214,7 @@ function StatStack({ friendStats }) {
                       <td>
                         {player.fouls}{" "}
                         {parseInt(player.fouls) === maxValues.fouls && (
-                          <Badge bg="danger">Most</Badge>
+                          <Badge bg="danger">⚠️</Badge>
                         )}
                       </td>
                     </tr>
@@ -267,7 +226,7 @@ function StatStack({ friendStats }) {
                         {player.headers_won}{" "}
                         {parseInt(player.headers_won) ===
                           maxValues.headers_won && (
-                          <Badge bg="success">Top</Badge>
+                          <Badge bg="success">🏆</Badge>
                         )}
                       </td>
                     </tr>
@@ -278,7 +237,7 @@ function StatStack({ friendStats }) {
                       <td>
                         {player.offsides}{" "}
                         {parseInt(player.offsides) === maxValues.offsides && (
-                          <Badge bg="danger">Most</Badge>
+                          <Badge bg="danger">⚠️</Badge>
                         )}
                       </td>
                     </tr>

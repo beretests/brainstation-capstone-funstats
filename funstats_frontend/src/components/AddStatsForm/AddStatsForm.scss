@@ -1,12 +1,36 @@
-@import "@/../node_modules/react-datepicker/dist/react-datepicker.css";
+@use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
 
-.form {
-  &__error {
-    color: red;
-    font-size: 0.7rem;
+.stats {
+  &__input {
+    margin-bottom: 1rem;
+  }
+  &__date-label {
+    margin-top: 1rem;
   }
 
-  &__input-group {
+  &__form-add {
+    @include desktop {
+      margin: 0 20rem;
+    }
+  }
+
+  &__title {
+    text-align: center;
+  }
+
+  &__button-container {
     display: flex;
+    justify-content: center;
+  }
+
+  &__button {
+    margin: 1rem 0;
+    @include button;
+    width: 100%;
+
+    @include tablet {
+      width: 50%;
+    }
   }
 }

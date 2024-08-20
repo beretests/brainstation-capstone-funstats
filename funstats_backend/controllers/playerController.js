@@ -181,13 +181,13 @@ export const addFriend = async (req, res) => {
 
   try {
     const friend = await knex("players")
-      .select("id")
+      .select("*")
       .where("username", "=", username);
 
     const [player1_id, player2_id] = [friend[0].id, req.params.id].sort();
 
     await knex("friendship").insert({ player1_id, player2_id });
-    res.status(201).json("Successfully added friend");
+    res.status(201).json(friend);
   } catch (error) {
     res.status(500).json({ message: `Unable to add friend: ${error}` });
   }

@@ -6,17 +6,30 @@ import { getAggregateStats } from "../../utils/getAggregateStats";
 import StatsTable from "../../components/StatsTable/StatsTable";
 import StatStack from "../../components/StatStack/StatStack";
 import axios from "axios";
+import { Stack, Button, Alert } from "react-bootstrap";
 
 function StatsPage() {
   const { id, friendId } = useParams();
   const [playerAggregateStats, setPlayerAggregateStats] = useState({});
   const [isVisible, setIsVisible] = useState(false);
   const [friendStats, setFriendStats] = useState([]);
+  const [statAdded, setStatAdded] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+
   const url = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     getAggregateStats(id, setPlayerAggregateStats);
   }, [!friendId]);
+
+  useEffect(() => {
+    if (statAdded) {
+      getAggregateStats(id, setPlayerAggregateStats);
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 5000);
+    }
+  }, [statAdded]);
 
   const handleClick = () => {
     setIsVisible(true);
@@ -44,15 +57,23 @@ function StatsPage() {
         <StatStack id={id} friendId={friendId} friendStats={friendStats} />
       ) : (
         <div className="stats">
+          {showAlert && (
+            <Alert showAlert={showAlert} variant="success">
+              Successfully added new stats for a game. Way to go! 🏆
+            </Alert>
+          )}
           <StatsTable stats={playerAggregateStats} className="stats-stack" />
-          <button className="profile__button" onClick={handleClick}>
-            Add Stat
-          </button>
-          <button className="profile__button">Compare Stat</button>
+          <Stack gap={2} className="col-md-5 mx-auto">
+            <Button className="profile__button" onClick={handleClick}>
+              Add Stat
+            </Button>
+          </Stack>
+
           {isVisible && (
             <AddStatsForm
-              setPlayerAggregateStats={setPlayerAggregateStats}
               setIsVisible={setIsVisible}
+              setStatAdded={setStatAdded}
+              setShowAlert={setShowAlert}
             />
           )}
         </div>

@@ -1,52 +1,39 @@
 @use "@/styles/partials/variables" as *;
 @use "@/styles/partials/mixins" as *;
 
-.stats-stack {
+tr {
+  border-style: none;
+  // background-color: blue;
+}
+
+.table-bordered {
+  border-width: 0;
+}
+.playerStats {
   // padding: 2rem;
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    // padding: 1rem;
-    // flex-direction: row;
-  }
+  background-color: $columbia-blue;
 
-  &__title {
-    // display: inline;
-    // flex: 1;
-    padding-bottom: 1rem;
-  }
-
-  &__rows {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  &__items {
-    display: flex;
-    justify-content: space-between;
-    gap: 2rem;
-  }
-
-  &__name {
-    padding: 0.5rem 1rem;
-    // background: $gradient-left;
-    border-radius: 30px;
-    text-transform: capitalize;
-    color: $raisin-black;
-    font-size: 1rem;
-    height: fit-content;
-  }
-
-  &__value {
-    padding: 0.5rem 2rem;
-    // background: $gradient-left;
-    border-radius: 30px;
-    color: rgb(92, 65, 93);
-    @include responsive_body_large;
-    font-weight: bold;
-    // font-size: 1.rem;
-    height: fit-content;
+  &__heading {
+    padding: 1rem;
     text-align: center;
   }
+}
+
+.hstack {
+  padding: 1rem;
+  justify-content: center;
+  flex-direction: column;
+
+  @include tablet {
+    flex-direction: row;
+  }
+}
+
+.stats-card {
+  width: 75%;
+  transition: width ease-in-out 0.3s;
+
+  // @include tablet {
+  //   width: 75%;
+  // }
 }

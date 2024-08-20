@@ -41,8 +41,8 @@ function LoginPage({ setIsLoggedIn }) {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
+    <div className="login">
+      <h2 className="login__heading">Login</h2>
       <Form onSubmit={handleLogin}>
         <Form.Group className="mb-3" controlId="formBasicUsername">
           <Form.Label>Username</Form.Label>

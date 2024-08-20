@@ -24,4 +24,8 @@
 
 .friends-container {
   border-top: 1px solid $dim-gray;
+
+  @include tablet {
+    border-top: none;
+  }
 }
