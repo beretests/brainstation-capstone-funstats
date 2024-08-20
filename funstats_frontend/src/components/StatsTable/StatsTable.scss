@@ -1,0 +1,39 @@
+@use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
+
+tr {
+  border-style: none;
+  // background-color: blue;
+}
+
+.table-bordered {
+  border-width: 0;
+}
+.playerStats {
+  // padding: 2rem;
+  background-color: $columbia-blue;
+
+  &__heading {
+    padding: 1rem;
+    text-align: center;
+  }
+}
+
+.hstack {
+  padding: 1rem;
+  justify-content: center;
+  flex-direction: column;
+
+  @include tablet {
+    flex-direction: row;
+  }
+}
+
+.stats-card {
+  width: 75%;
+  transition: width ease-in-out 0.3s;
+
+  // @include tablet {
+  //   width: 75%;
+  // }
+}

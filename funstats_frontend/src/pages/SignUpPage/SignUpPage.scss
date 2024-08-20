@@ -1,0 +1,20 @@
+@use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
+
+.signup {
+  padding: 1rem;
+  background-color: $columbia-blue;
+
+  @include tablet {
+    padding: 0 5rem;
+  }
+
+  &__heading {
+    text-align: center;
+    padding: 1rem;
+
+    @include tablet {
+      padding-bottom: 2rem;
+    }
+  }
+}

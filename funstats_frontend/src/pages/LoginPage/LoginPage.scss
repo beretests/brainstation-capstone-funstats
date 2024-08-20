@@ -1,0 +1,16 @@
+@use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
+
+.login {
+  background-color: $columbia-blue;
+  padding: 1rem;
+
+  @include tablet {
+    padding: 1rem 5rem;
+  }
+
+  &__heading {
+    text-align: center;
+    padding: 1rem;
+  }
+}

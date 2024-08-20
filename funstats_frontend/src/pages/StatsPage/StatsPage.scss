@@ -1,0 +1,8 @@
+@use "@/styles/partials/variables" as *;
+@use "@/styles/partials/mixins" as *;
+
+.stats {
+  padding: 1rem;
+  width: 100%;
+  background-color: $columbia-blue;
+}
