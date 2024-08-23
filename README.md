@@ -59,41 +59,39 @@ Kids who play soccer (or any other sport for that matter) are typically competit
 ### Mockups
 
 #### Home Page
-![image](https://github.com/user-attachments/assets/159f1bc9-4e73-4bfe-9d0b-7afcd1b331ba)
-![image](https://github.com/user-attachments/assets/80105e79-4787-40d0-8e36-b491d7af3697)
+![image](https://github.com/user-attachments/assets/bd3621d4-935e-4c78-84bc-0b663e3b40b1)
+
 
 #### Register Page
-![image](https://github.com/user-attachments/assets/2c721906-9745-458e-b1cd-285a87732dfe)
-![image](https://github.com/user-attachments/assets/3d74c700-fd0b-4ffc-848e-2606d13a82de)
+![image](https://github.com/user-attachments/assets/4daf1be7-0aae-40d7-9b1a-8c7c08f0c8e0)
+
 
 
 #### Login Page
-![image](https://github.com/user-attachments/assets/080501da-bc24-4743-8c7f-47b3b037cd60)
+![image](https://github.com/user-attachments/assets/0e95d357-fd62-4618-95bb-2a3af13b41eb)
 
-![image](https://github.com/user-attachments/assets/6805a611-5d70-41bb-ba5a-c2e0dd1106d7)
 
 
 #### Profile Page
-![image](https://github.com/user-attachments/assets/b8106ff7-2159-4048-b794-e25d6356d3bb)
+![image](https://github.com/user-attachments/assets/4b7a949c-46a5-48cc-8fe3-23e541c7d7c6)
 
-![image](https://github.com/user-attachments/assets/94356f7e-ab3b-4791-8aa9-eac884eab6c5)
 
 
 #### Profile Page (friends list)
 
-![image](https://github.com/user-attachments/assets/9d9fb5a3-174f-4b93-9721-17cc9f8bcfca)
-![image](https://github.com/user-attachments/assets/578389c3-e024-4ee7-b193-06ab79478723)
+![image](https://github.com/user-attachments/assets/2d759246-5d68-4e28-9752-bd095729d42a)
+
 
 
 #### View Stats Page (own stats only)
-![image](https://github.com/user-attachments/assets/d5b0a67c-590f-432d-9b8f-476f83a062ef)
-![image](https://github.com/user-attachments/assets/81de4bbd-a3ea-4442-9f91-311e5a7ef0f2)
+![image](https://github.com/user-attachments/assets/9d765a7f-293e-4890-a099-c71d99b50dde)
+
 
 
 #### View Stats Page (compared state)
 
-![image](https://github.com/user-attachments/assets/3c3e6d73-6588-4a18-99ae-2c56d3ce8e53)
-![image](https://github.com/user-attachments/assets/83db25e1-f064-473d-8c38-60c86005c1ca)
+![image](https://github.com/user-attachments/assets/bc477955-249e-4704-b9ec-4620ffcc2a51)
+
 
 
 #### Update Stats Page (coming soon)
