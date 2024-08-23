@@ -51,8 +51,7 @@ Kids who play soccer (or any other sport for that matter) are typically competit
 ### Sitemap
 
 - Home page
-- Profile page
-- Friends page
+- Profile + Friends page
 - View + Compare Stats
 - Register
 - Login
@@ -106,68 +105,8 @@ Kids who play soccer (or any other sport for that matter) are typically competit
 ![image](https://github.com/user-attachments/assets/6c9da142-8e90-46c3-8556-566011297d04)
 
 
-```
-Table players (
-  id INTEGER PRIMARY KEY
-  username VARCHAR
-  password VARCHAR
-  name VARCHAR
-  age INTEGER
-  profile_picture BLOB
-  created_at TIMESTAMP
-)
+![image](https://github.com/user-attachments/assets/fbcdce0d-1a18-4a18-8d36-656564797ad1)
 
-CREATE TABLE friendship (
-  player1_id INTEGER NOT NULL,
-  player2_id INTEGER NOT NULL,
-  date TIMESTAMP,
-  PRIMARY KEY (player1_id, player2_id),
-  CONSTRAINT player1_player2_ids CHECK (player1_id < player2_id)
-);
-
-CREATE TABLE stats (
-  id INTEGER PRIMARY KEY
-  date TIMESTAMP
-  goals_scored INTEGER
-  assists INTEGER
-  shots_on_target INTEGER
-  tackles INTEGER
-  interceptions INTEGER
-  dribbles INTEGER
-  saves INTEGER
-  clean_sheets INTEGER
-  yellow_cards INTEGER
-  red_cards INTEGER
-  player_id INTEGER REFERENCES players.id
-  fouls_committed INTEGER
-  headers_won INTEGER
-  offside INTEGER
-  status VARCHAR
-  created_at TIMESTAMP
-)
-
-CREATE TABLE famous_soccer_players (
-  id INTEGER PRIMARY KEY
-  name VARCHAR
-  picture VARCHAR
-  goals_scored INTEGER
-  assists INTEGER
-  shots_on_target INTEGER
-  tackles INTEGER
-  interceptions INTEGER
-  dribbles INTEGER
-  saves INTEGER
-  clean_sheets INTEGER
-  yellow_cards INTEGER
-  red_cards INTEGER
-  player_id INTEGER
-  fouls_committed INTEGER
-  headers_won INTEGER
-  offside INTEGER
-  status VARCHAR
-  created_at TIMESTAMP
-)
-```
 
 ### Endpoints
 
