@@ -28,8 +28,9 @@ function FriendsList({
     setFriendUsername(e.target.value);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     try {
+      console.log(id);
       await axios.post(friendUrl, { username: friendUsername });
       setFriendAdded(true);
       setShowAlert(true);

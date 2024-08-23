@@ -9,14 +9,6 @@ const router = express.Router();
 
 function authorize(req, res, next) {
   try {
-    // const token = req.headers["authorization"];
-    // if (!token) return res.status(401).json({ message: "Token required" });
-
-    // jwt.verify(token, JWT_SECRET, (err, player) => {
-    //   if (err) return res.status(403).json({ message: "Invalid token" });
-    //   req.player = player;
-    //   next();
-    // });
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
 
@@ -27,10 +19,6 @@ function authorize(req, res, next) {
       req.player = player;
       next();
     });
-
-    // const payload = jwt.verify(token, process.env.JWT_KEY);
-    // req.playerId = payload.id;
-    // next();
   } catch (err) {
     res.sendStatus(401);
   }
@@ -51,20 +39,15 @@ router.post("/signup", async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: `Unable to create player: ${error}` });
   }
-  // res.json({ success: "true" });
 });
 
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
   const player = await knex("players").where({ username: username }).first();
-  if (!player) {
-    return res.status(401).send("Invalid username");
+  if (!player || password !== player.password) {
+    return res.status(401).send("Invalid username or password");
   }
-  // if (password !== player.password) {
-  //   return res.status(401).send("Invalid password");
-  // }
-  console.log(player);
 
   const token = jwt.sign(
     {

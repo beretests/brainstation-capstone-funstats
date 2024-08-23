@@ -51,6 +51,10 @@
 
   &__button {
     @include button;
+
+    &--modified {
+      margin-top: 2rem;
+    }
   }
 }
 

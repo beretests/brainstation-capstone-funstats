@@ -9,6 +9,8 @@ import playerRoutes from "./routes/playerRoute.js";
 import authRoutes from "./routes/auth.js";
 
 const app = express();
+app.use(cors());
+
 const PORT = process.env.PORT || 5050;
 const FILE_SIZE_LIMIT = 5 * 1024 * 1024;
 const s3Client = new S3Client({
@@ -21,7 +23,6 @@ const s3Client = new S3Client({
 });
 
 app.use(express.json());
-app.use(cors());
 app.get("/", (_req, res) => {
   res.send("Welcome to FunStats API");
 });

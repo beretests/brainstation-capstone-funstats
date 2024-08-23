@@ -118,3 +118,10 @@
     outline: 4px auto -webkit-focus-ring-color;
   }
 }
+
+@mixin layered-balls($images...) {
+  background-image: #{join($images, ", ")};
+  background-size: contain, contain, contain, contain contain;
+  background-position: center, center, center, center, center;
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat no-repeat;
+}

@@ -5,7 +5,6 @@
   padding-top: 2rem;
   display: flex;
   flex-direction: column;
-  // background-color: $columbia-blue;
 
   @include tablet {
     flex-flow: row wrap;
@@ -19,6 +18,10 @@
   }
 
   &__stack {
+  }
+
+  &__button {
+    @include button;
   }
 }
 

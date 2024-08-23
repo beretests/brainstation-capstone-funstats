@@ -1,45 +1,32 @@
 @use "@/styles/partials/variables" as *;
 @use "@/styles/partials/mixins" as *;
-// @use "@/styles/partials/typography" as *;
 
 .header {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   padding: 0 1rem;
-  // width: 100%;
+  background-color: $powder-blue;
 
   @include tablet {
     padding: 0 2rem;
   }
 
   &__logo {
-    // width: 100%;
     display: flex;
     position: relative;
     margin: 10px 0;
-    // align-items: center;
-    // padding-top: 0.5rem;
-    // margin-top: 0.5rem;
   }
 
   &__logo-image {
     width: 2rem;
     height: 2rem;
-
-    // @include tablet {
-    //   width: 3rem;
-    //   height: 3rem;
-    // }
   }
 
   &__title {
     @include responsive_page_header;
     font-size: 1.2rem;
     color: $raisin-black;
-    // width: fit-content;
-    // margin-top: 0.4rem;
-    // padding-top: 0.2rem;
 
     @include tablet {
       font-size: 1.5rem;
