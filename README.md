@@ -117,7 +117,7 @@ Parameters:
 - token: JWT token
 
 Response:
-```
+```json
 {
     "id": "3aa3a66a-bc1d-4f52-83fc-88d39e2a1cce",
     "name": "Elvis Omeje",
@@ -136,7 +136,7 @@ Parameters:
 - token: JWT token
 
 Response
-```
+```json
 [
     {
         "id": "2ea69397-b3de-4d5b-be4d-d3d5fee25de1",
@@ -174,7 +174,7 @@ Parameters:
 - token: JWT token
 
 Response:
-```
+```json
 {
     "name": "Elvis Omeje",
     "profile_pic": "https://funstats-images.beretesting.com/funstats-3.jpg",
@@ -201,7 +201,7 @@ Parameters:
 - token: JWT of the logged in player
 
 Response:
-```
+```json
 Successfully created stat
 ```
 
@@ -214,7 +214,7 @@ Parameters:
 - token: JWT of the logged in player
 
 Response:
-```
+```json
 [
   {
     "id": "ea3cfa13-b5d2-4f68-b8a8-b3b6b8d2ff76",
@@ -290,7 +290,7 @@ Parameters:
 
 Response:
 
-```
+```json
 Successfully created player
 ```
 
@@ -305,7 +305,7 @@ Parameters:
 
 Response:
 
-```
+```json
 {
     "token": "seyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6I...",
     "id": "ea3cfa13-b5d2-4f68-b8a8-b3b6b8d2ff76"
