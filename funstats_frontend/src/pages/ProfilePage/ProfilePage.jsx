@@ -2,7 +2,7 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./ProfilePage.scss";
 import { getAge } from "../../utils/getAge";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
 import FriendsList from "../../components/FriendsList/FriendsList";
@@ -16,6 +16,7 @@ function ProfilePage() {
   const [friends, setFriends] = useState([]);
   const [friendAdded, setFriendAdded] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const alertRef = useRef(null);
 
   const navigate = useNavigate();
   const [profileData, setProfileData] = useState(null);
@@ -46,6 +47,11 @@ function ProfilePage() {
     if (friendAdded) {
       setIsVisible(false);
       handleViewFriends();
+      setTimeout(() => {
+        if (alertRef.current) {
+          alertRef.current.focus();
+        }
+      }, 100);
       setTimeout(() => {
         setShowAlert(false);
       }, 5000);
@@ -89,7 +95,7 @@ function ProfilePage() {
     <>
       <h2 className="profile__heading">{`${profileData.name}'s Profile`}</h2>
       {showAlert && (
-        <Alert showAlert={showAlert} variant="success">
+        <Alert ref={alertRef} showAlert={showAlert} variant="success">
           You successfully added a new friend! 🤝
         </Alert>
       )}
@@ -111,10 +117,18 @@ function ProfilePage() {
                 <br />
               </Card.Text>
               <Stack gap={2} className="col-md-5 mx-auto profile__stack">
-                <Button href={`/player/${id}/stats`} variant="primary">
+                <Button
+                  href={`/player/${id}/stats`}
+                  variant="primary"
+                  className="profile__button profile__button-modified"
+                >
                   View Stats
                 </Button>
-                <Button variant="primary" onClick={() => toggleShow()}>
+                <Button
+                  variant="primary"
+                  onClick={() => toggleShow()}
+                  className="profile__button"
+                >
                   View Friends
                 </Button>
               </Stack>
