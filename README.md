@@ -31,7 +31,7 @@ Kids who play soccer (or any other sport for that matter) are typically competit
 ### Tech Stack
 
 - React
-- TypeScript
+- Javascript
 - MySQL
 - Express
 - Client libraries:
@@ -43,6 +43,8 @@ Kids who play soccer (or any other sport for that matter) are typically competit
   - knex
   - express
   - dotenv
+  - bcrypt
+  - jsonwebtoken
 
 ### APIs
 
@@ -108,45 +110,188 @@ Kids who play soccer (or any other sport for that matter) are typically competit
 
 ### Endpoints
 
-**GET /profile**
+**GET /player/:id**
+- Get player's profile information
 
-- Get player profile
+Parameters:
+- token: JWT token
 
-**GET /friends**
+Response:
+```
+{
+    "id": "3aa3a66a-bc1d-4f52-83fc-88d39e2a1cce",
+    "name": "Elvis Omeje",
+    "profile_pic": "https://funstats-images.beretesting.com/funstats-3.jpg",
+    "DOB": 1347948000,
+    "position": "Center Forward"
+}
+```
+
+**GET /player/:id/friends**
 
 - Get player's friends list
 
-**GET /friends/:id(or :playername)/stats**
+Parameters:
+- id: player id as uuid
+- token: JWT token
 
-- Get friend stats to compare
+Response
+```
+[
+    {
+        "id": "2ea69397-b3de-4d5b-be4d-d3d5fee25de1",
+        "username": "roronoa_zoro",
+        "name": "Eric Omeje",
+        "profile_pic": "https://funstats-images.beretesting.com/funstats-5.jpg",
+        "DOB": 1280556000,
+        "position": "Center Back"
+    },
+    {
+        "id": "bd9c78f3-4442-4876-8f9e-1a869afcf6da",
+        "username": "goal_master",
+        "name": "Maria Sanchez",
+        "profile_pic": "https://funstats-images.beretesting.com/funstats-4.jpg",
+        "DOB": 1435708800,
+        "position": "Goalkeeper"
+    },
+    {
+        "id": "c5b172ec-e1f5-4cde-ae7e-017e14509e15",
+        "username": "winger_whiz",
+        "name": "Noah Smith",
+        "profile_pic": "https://funstats-images.beretesting.com/funstats-1.jpg",
+        "DOB": 1405296000,
+        "position": "Winger"
+    }
+]
+```
 
-**POST /stats**
+**GET /player/:id/stats**
 
-**PUT /stats/:id**
+- Get player stats
+  
+Parameters:
+- id: player id as uuid
+- token: JWT token
 
-- Logged in player can update their rating of a café
+Response:
+```
+{
+    "name": "Elvis Omeje",
+    "profile_pic": "https://funstats-images.beretesting.com/funstats-3.jpg",
+    "id": "3aa3a66a-bc1d-4f52-83fc-88d39e2a1cce",
+    "goals_scored": "5",
+    "assists": "12",
+    "shots_on_target": "11",
+    "tackles": "9",
+    "interceptions": "10",
+    "saves": "0",
+    "yellow_cards": "1",
+    "red_cards": "1",
+    "fouls": "2",
+    "headers_won": "2",
+    "offsides": "6"
+}
+```
+
+**POST /player/:id/stats**
+- Logged in player can add new game stats
 
 Parameters:
-
 - id: Stats id
 - token: JWT of the logged in player
-- rating: Number Rating out of 5 in 0.5 increments
 
-**POST /players/register**
+Response:
+```
+Successfully created stat
+```
+
+**POST /player/:id/friends**
+- Logged in player can add new friend
+
+Parameters:
+- id: Stats id
+- username: Friend's username
+- token: JWT of the logged in player
+
+Response:
+```
+[
+  {
+    "id": "ea3cfa13-b5d2-4f68-b8a8-b3b6b8d2ff76",
+    "username": "midfield_maestro",
+    "name": "Sophia Williams",
+    "password": "superSecret321",
+    "profile_pic": "https://funstats-images.beretesting.com/funstats-2.jpg",
+    "DOB": 1338508800,
+    "position": "Midfielder",
+    "updated_at": "2024-08-21T18:04:45.000Z"
+  }
+]
+```
+
+**GET /player/:id/stats/compare/:friendId**
+- Logged in player can compare stats to friend's stats
+
+Parameters:
+- id: player id
+- friendId: Friend's player id
+- token: JWT of the logged in player
+
+Response:
+```json
+[
+    {
+        "name": "Eric Omeje",
+        "profile_pic": "https://funstats-images.beretesting.com/funstats-5.jpg",
+        "id": "2ea69397-b3de-4d5b-be4d-d3d5fee25de1",
+        "goals_scored": "0",
+        "assists": "3",
+        "shots_on_target": "1",
+        "tackles": "12",
+        "interceptions": "12",
+        "saves": "7",
+        "yellow_cards": "2",
+        "red_cards": "0",
+        "fouls": "4",
+        "headers_won": "0",
+        "offsides": "0"
+    },
+    {
+        "name": "Elvis Omeje",
+        "profile_pic": "https://funstats-images.beretesting.com/funstats-3.jpg",
+        "id": "3aa3a66a-bc1d-4f52-83fc-88d39e2a1cce",
+        "goals_scored": "5",
+        "assists": "12",
+        "shots_on_target": "11",
+        "tackles": "9",
+        "interceptions": "10",
+        "saves": "0",
+        "yellow_cards": "1",
+        "red_cards": "1",
+        "fouls": "2",
+        "headers_won": "2",
+        "offsides": "6"
+    }
+]
+```
+
+**POST /players/signup**
 
 - Add a player account
 
 Parameters:
 
-- playername: Player's playername
+- username: Player's username
+- name: Player's full name
 - password: Player's password
+- DOB: Player's date of birth
+- position: Player's usual position in games
+- profile_pic: Player's profile picture URL
 
 Response:
 
 ```
-{
-    "token": "seyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6I..."
-}
+Successfully created player
 ```
 
 **POST /players/login**
@@ -162,7 +307,8 @@ Response:
 
 ```
 {
-    "token": "seyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6I..."
+    "token": "seyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6I...",
+    "id": "ea3cfa13-b5d2-4f68-b8a8-b3b6b8d2ff76"
 }
 ```
 
