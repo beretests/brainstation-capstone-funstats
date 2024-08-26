@@ -6,7 +6,6 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { positions } from "../../data/data";
 
 function SignUpPage() {
-  // const [isSignedUp, setIsSignedUp] = useState(false);
   const [formData, setFormData] = useState({
     DOB: "",
     username: "",
@@ -50,9 +49,7 @@ function SignUpPage() {
     try {
       console.log("Form Data: ", JSON.stringify(formData));
       await axios.post(signupUrl, formData);
-      // e.currentTarget.reset();
       navigate("/");
-      // setIsSignedUp(true);
     } catch (error) {
       console.error(error);
     }
