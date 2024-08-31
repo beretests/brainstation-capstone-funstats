@@ -14,6 +14,7 @@ function SignUpPage() {
     position: "Goalkeeper",
   });
   const url = import.meta.env.VITE_API_URL;
+  // TODO: signup requests should go to the signup auth route
   const signupUrl = `${url}/player/add`;
   const navigate = useNavigate();
 
