@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.scss";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import Header from "./components/Header/Header";
@@ -11,11 +11,12 @@ import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 
 function App() {
   const id = sessionStorage.getItem("userId");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <>
       <BrowserRouter>
-        <Header id={id} />
+        <Header id={id} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route
@@ -43,7 +44,10 @@ function App() {
             }
           />
           <Route path="/sign_up" element={<SignUpPage />} />
-          <Route path="/sign_in" element={<LoginPage />} />
+          <Route
+            path="/sign_in"
+            element={<LoginPage setIsLoggedIn={setIsLoggedIn} />}
+          />
         </Routes>
       </BrowserRouter>
     </>

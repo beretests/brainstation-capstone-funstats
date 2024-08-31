@@ -4,7 +4,7 @@ import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-function LoginPage() {
+function LoginPage({ setIsLoggedIn }) {
   const navigate = useNavigate();
   const url = import.meta.env.VITE_API_URL;
   const loginUrl = `${url}/login`;
@@ -20,6 +20,7 @@ function LoginPage() {
       sessionStorage.setItem("JWTtoken", response.data.token);
       sessionStorage.setItem("userId", response.data.id);
       const id = response.data.id;
+      setIsLoggedIn(true);
 
       navigate(`/player/${id}`);
     } catch (error) {
