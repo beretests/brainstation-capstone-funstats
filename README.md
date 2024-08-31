@@ -31,7 +31,7 @@ Kids who play soccer (or any other sport for that matter) are typically competit
 ### Tech Stack
 
 - React
-- TypeScript
+- Javascript
 - MySQL
 - Express
 - Client libraries:
@@ -43,6 +43,8 @@ Kids who play soccer (or any other sport for that matter) are typically competit
   - knex
   - express
   - dotenv
+  - bcrypt
+  - jsonwebtoken
 
 ### APIs
 
@@ -51,8 +53,7 @@ Kids who play soccer (or any other sport for that matter) are typically competit
 ### Sitemap
 
 - Home page
-- Profile page
-- Friends page
+- Profile + Friends page
 - View + Compare Stats
 - Register
 - Login
@@ -60,141 +61,237 @@ Kids who play soccer (or any other sport for that matter) are typically competit
 ### Mockups
 
 #### Home Page
+![image](https://github.com/user-attachments/assets/bd3621d4-935e-4c78-84bc-0b663e3b40b1)
 
-![home page](screenshots/image.png)
 
-#### Register/Login Page
+#### Register Page
+![image](https://github.com/user-attachments/assets/4daf1be7-0aae-40d7-9b1a-8c7c08f0c8e0)
 
-![register/login page](screenshots/image-1.png)
+
+
+#### Login Page
+![image](https://github.com/user-attachments/assets/0e95d357-fd62-4618-95bb-2a3af13b41eb)
+
+
 
 #### Profile Page
+![image](https://github.com/user-attachments/assets/4b7a949c-46a5-48cc-8fe3-23e541c7d7c6)
 
-![placeholder]()
 
-#### Friends Page
 
-![placeholder]()
+#### Profile Page (friends list)
+
+![image](https://github.com/user-attachments/assets/2d759246-5d68-4e28-9752-bd095729d42a)
+
+
 
 #### View Stats Page (own stats only)
+![image](https://github.com/user-attachments/assets/9d765a7f-293e-4890-a099-c71d99b50dde)
 
-![view stats page](screenshots/image-2.png)
+
 
 #### View Stats Page (compared state)
 
-![compared stats](screenshots/image-3.png)
+![image](https://github.com/user-attachments/assets/bc477955-249e-4704-b9ec-4620ffcc2a51)
 
-#### Update Stats Page
+
+
+#### Update Stats Page (coming soon)
 
 ![placeholder]()
 
 ### Data
 
-![db diagram](screenshots/image-4.png)
+![image](https://github.com/user-attachments/assets/6c9da142-8e90-46c3-8556-566011297d04)
 
-```
-Table players (
-  id INTEGER PRIMARY KEY
-  username VARCHAR
-  password VARCHAR
-  name VARCHAR
-  age INTEGER
-  profile_picture BLOB
-  created_at TIMESTAMP
-)
 
-CREATE TABLE friendship (
-  player1_id INTEGER NOT NULL,
-  player2_id INTEGER NOT NULL,
-  date TIMESTAMP,
-  PRIMARY KEY (player1_id, player2_id),
-  CONSTRAINT player1_player2_ids CHECK (player1_id < player2_id)
-);
+![image](https://github.com/user-attachments/assets/fbcdce0d-1a18-4a18-8d36-656564797ad1)
 
-CREATE TABLE stats (
-  id INTEGER PRIMARY KEY
-  date TIMESTAMP
-  goals_scored INTEGER
-  assists INTEGER
-  shots_on_target INTEGER
-  tackles INTEGER
-  interceptions INTEGER
-  dribbles INTEGER
-  saves INTEGER
-  clean_sheets INTEGER
-  yellow_cards INTEGER
-  red_cards INTEGER
-  player_id INTEGER REFERENCES players.id
-  fouls_committed INTEGER
-  headers_won INTEGER
-  offside INTEGER
-  status VARCHAR
-  created_at TIMESTAMP
-)
-
-CREATE TABLE famous_soccer_players (
-  id INTEGER PRIMARY KEY
-  name VARCHAR
-  picture VARCHAR
-  goals_scored INTEGER
-  assists INTEGER
-  shots_on_target INTEGER
-  tackles INTEGER
-  interceptions INTEGER
-  dribbles INTEGER
-  saves INTEGER
-  clean_sheets INTEGER
-  yellow_cards INTEGER
-  red_cards INTEGER
-  player_id INTEGER
-  fouls_committed INTEGER
-  headers_won INTEGER
-  offside INTEGER
-  status VARCHAR
-  created_at TIMESTAMP
-)
-```
 
 ### Endpoints
 
-**GET /profile**
+**GET /player/:id**
+- Get player's profile information
 
-- Get player profile
+Parameters:
+- token: JWT token
 
-**GET /friends**
+Response:
+```json
+{
+    "id": "3aa3a66a-bc1d-4f52-83fc-88d39e2a1cce",
+    "name": "Elvis Omeje",
+    "profile_pic": "https://funstats-images.beretesting.com/funstats-3.jpg",
+    "DOB": 1347948000,
+    "position": "Center Forward"
+}
+```
+
+**GET /player/:id/friends**
 
 - Get player's friends list
 
-**GET /friends/:id(or :playername)/stats**
+Parameters:
+- id: player id as uuid
+- token: JWT token
 
-- Get friend stats to compare
+Response
+```json
+[
+    {
+        "id": "2ea69397-b3de-4d5b-be4d-d3d5fee25de1",
+        "username": "roronoa_zoro",
+        "name": "Eric Omeje",
+        "profile_pic": "https://funstats-images.beretesting.com/funstats-5.jpg",
+        "DOB": 1280556000,
+        "position": "Center Back"
+    },
+    {
+        "id": "bd9c78f3-4442-4876-8f9e-1a869afcf6da",
+        "username": "goal_master",
+        "name": "Maria Sanchez",
+        "profile_pic": "https://funstats-images.beretesting.com/funstats-4.jpg",
+        "DOB": 1435708800,
+        "position": "Goalkeeper"
+    },
+    {
+        "id": "c5b172ec-e1f5-4cde-ae7e-017e14509e15",
+        "username": "winger_whiz",
+        "name": "Noah Smith",
+        "profile_pic": "https://funstats-images.beretesting.com/funstats-1.jpg",
+        "DOB": 1405296000,
+        "position": "Winger"
+    }
+]
+```
 
-**POST /stats**
+**GET /player/:id/stats**
 
-**PUT /stats/:id**
+- Get player stats
+  
+Parameters:
+- id: player id as uuid
+- token: JWT token
 
-- Logged in player can update their rating of a café
+Response:
+```json
+{
+    "name": "Elvis Omeje",
+    "profile_pic": "https://funstats-images.beretesting.com/funstats-3.jpg",
+    "id": "3aa3a66a-bc1d-4f52-83fc-88d39e2a1cce",
+    "goals_scored": "5",
+    "assists": "12",
+    "shots_on_target": "11",
+    "tackles": "9",
+    "interceptions": "10",
+    "saves": "0",
+    "yellow_cards": "1",
+    "red_cards": "1",
+    "fouls": "2",
+    "headers_won": "2",
+    "offsides": "6"
+}
+```
+
+**POST /player/:id/stats**
+- Logged in player can add new game stats
 
 Parameters:
-
 - id: Stats id
 - token: JWT of the logged in player
-- rating: Number Rating out of 5 in 0.5 increments
 
-**POST /players/register**
+Response:
+```json
+Successfully created stat
+```
+
+**POST /player/:id/friends**
+- Logged in player can add new friend
+
+Parameters:
+- id: Stats id
+- username: Friend's username
+- token: JWT of the logged in player
+
+Response:
+```json
+[
+  {
+    "id": "ea3cfa13-b5d2-4f68-b8a8-b3b6b8d2ff76",
+    "username": "midfield_maestro",
+    "name": "Sophia Williams",
+    "password": "superSecret321",
+    "profile_pic": "https://funstats-images.beretesting.com/funstats-2.jpg",
+    "DOB": 1338508800,
+    "position": "Midfielder",
+    "updated_at": "2024-08-21T18:04:45.000Z"
+  }
+]
+```
+
+**GET /player/:id/stats/compare/:friendId**
+- Logged in player can compare stats to friend's stats
+
+Parameters:
+- id: player id
+- friendId: Friend's player id
+- token: JWT of the logged in player
+
+Response:
+```json
+[
+    {
+        "name": "Eric Omeje",
+        "profile_pic": "https://funstats-images.beretesting.com/funstats-5.jpg",
+        "id": "2ea69397-b3de-4d5b-be4d-d3d5fee25de1",
+        "goals_scored": "0",
+        "assists": "3",
+        "shots_on_target": "1",
+        "tackles": "12",
+        "interceptions": "12",
+        "saves": "7",
+        "yellow_cards": "2",
+        "red_cards": "0",
+        "fouls": "4",
+        "headers_won": "0",
+        "offsides": "0"
+    },
+    {
+        "name": "Elvis Omeje",
+        "profile_pic": "https://funstats-images.beretesting.com/funstats-3.jpg",
+        "id": "3aa3a66a-bc1d-4f52-83fc-88d39e2a1cce",
+        "goals_scored": "5",
+        "assists": "12",
+        "shots_on_target": "11",
+        "tackles": "9",
+        "interceptions": "10",
+        "saves": "0",
+        "yellow_cards": "1",
+        "red_cards": "1",
+        "fouls": "2",
+        "headers_won": "2",
+        "offsides": "6"
+    }
+]
+```
+
+**POST /players/signup**
 
 - Add a player account
 
 Parameters:
 
-- playername: Player's playername
+- username: Player's username
+- name: Player's full name
 - password: Player's password
+- DOB: Player's date of birth
+- position: Player's usual position in games
+- profile_pic: Player's profile picture URL
 
 Response:
 
-```
-{
-    "token": "seyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6I..."
-}
+```json
+Successfully created player
 ```
 
 **POST /players/login**
@@ -208,9 +305,10 @@ Parameters:
 
 Response:
 
-```
+```json
 {
-    "token": "seyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6I..."
+    "token": "seyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6I...",
+    "id": "ea3cfa13-b5d2-4f68-b8a8-b3b6b8d2ff76"
 }
 ```
 

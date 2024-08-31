@@ -18,5 +18,4 @@ router
   .get(playerController.getFriends)
   .post(playerController.addFriend);
 
-// router.route("/:id/friends/stats").get(playerController.getFriendStats);
 export default router;
