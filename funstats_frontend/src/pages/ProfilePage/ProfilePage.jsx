@@ -67,7 +67,11 @@ function ProfilePage() {
   const handleViewFriends = async () => {
     if (!isVisible) {
       try {
-        const response = await axios.get(friendUrl);
+        const response = await axios.get(friendUrl, {
+          headers: {
+            'ngrok-skip-browser-warning': '1'
+          },
+        });
         setFriends([...friends, ...response.data]);
 
         setIsVisible(true);
