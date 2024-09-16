@@ -1,0 +1,32 @@
+services:
+  express-app:
+    build: .
+    ports:
+      - "5050:5050" # Map container port 3000 to host port 3000
+    env_file:
+      - .env
+    depends_on:
+      - mysql
+    restart: on-failure
+    networks:
+      - express-network
+
+  mysql:
+    image: mysql:8
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+    ports:
+      - "3306:3306" # Map MySQL port
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - express-network
+
+volumes:
+  mysql-data:
+
+networks:
+  express-network:
