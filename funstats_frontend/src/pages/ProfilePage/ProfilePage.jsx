@@ -28,8 +28,10 @@ function ProfilePage() {
       const response = await axios.get(profileUrl, {
         headers: {
           Authorization: `Bearer ${token}`,
+          'ngrok-skip-browser-warning': '1'
         },
       });
+      console.log(response)
       setProfileData(response.data);
     } catch (error) {
       console.error(error);
