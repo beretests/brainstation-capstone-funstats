@@ -4,7 +4,11 @@ export const getAggregateStats = async (id, setPlayerAggregateStats) => {
   const url = import.meta.env.VITE_API_URL;
 
   try {
-    const response = await axios.get(`${url}/player/${id}/stats`);
+    const response = await axios.get(`${url}/player/${id}/stats`, {
+      headers: {
+        "ngrok-skip-browser-warning": "1",
+      },
+    });
     // console.log("STATS: ", response);
     setPlayerAggregateStats(response.data);
   } catch (err) {
@@ -16,7 +20,10 @@ export const getFriends = async (id, setFriends, setIsVisible) => {
   const url = import.meta.env.VITE_API_URL;
 
   try {
-    const response = await axios.get(`${url}/player/${id}/friends`);
+    const response = await axios.get(`${url}/player/${id}/friends`, {
+      headers: {
+        'ngrok-skip-browser-warning': '1'
+      }});
     // console.log("STATS: ", response);
     setFriends([...friends, response.data]);
     setIsVisible(true);
