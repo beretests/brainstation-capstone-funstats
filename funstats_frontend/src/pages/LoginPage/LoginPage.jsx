@@ -13,10 +13,18 @@ function LoginPage({ setIsLoggedIn }) {
     e.preventDefault();
 
     try {
-      const response = await axios.post(loginUrl, {
-        username: e.currentTarget.formBasicUsername.value,
-        password: e.currentTarget.formBasicPassword.value,
-      });
+      const response = await axios.post(
+        loginUrl,
+        {
+          username: e.currentTarget.formBasicUsername.value,
+          password: e.currentTarget.formBasicPassword.value,
+        },
+        {
+          headers: {
+            "ngrok-skip-browser-warning": "1",
+          },
+        }
+      );
       sessionStorage.setItem("JWTtoken", response.data.token);
       sessionStorage.setItem("userId", response.data.id);
       const id = response.data.id;

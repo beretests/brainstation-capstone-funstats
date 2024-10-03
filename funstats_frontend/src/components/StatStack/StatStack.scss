@@ -1,21 +1,5 @@
 @use "@/styles/partials/variables" as *;
 @use "@/styles/partials/mixins" as *;
-// @import "../../../node_modules/bootstrap/scss/tables";
-
-// .table-custom {
-//   // --bs-table-striped-bg: $table-striped-bg;
-//   // --bs-table-striped-color: $table-striped-color;
-// }
-
-tr {
-  border-style: none;
-  // background-color: blue;
-}
-
-td,
-th {
-  vertical-align: middle;
-}
 
 .stats-heading {
   @include responsive_page_header;
@@ -28,4 +12,17 @@ th {
   background-color: $columbia-blue;
   display: flex;
   justify-content: space-evenly;
+}
+
+.img-thumbnail {
+  height: 6.5rem;
+  object-fit: contain;
+  background-color: azure;
+}
+
+.badge {
+  position: absolute;
+  // top: 0;
+  // right: 0;
+  transform: "translate(50%, -50%)";
 }

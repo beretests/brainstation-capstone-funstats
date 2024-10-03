@@ -22,6 +22,7 @@ services:
       - "3306:3306" # Map MySQL port
     volumes:
       - mysql-data:/var/lib/mysql
+    restart: unless-stopped
     networks:
       - express-network
 

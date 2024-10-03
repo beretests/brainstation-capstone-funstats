@@ -16,4 +16,4 @@ COPY . .
 EXPOSE 5050
 
 # Start the Express server
-CMD ["npm", "start"]
+CMD ["/bin/bash", "-c", "npm start;npm run migrate:down;npm run migrate;npm run seed"]

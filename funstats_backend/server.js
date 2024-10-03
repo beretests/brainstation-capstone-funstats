@@ -11,6 +11,7 @@ import authRoutes from "./routes/auth.js";
 const app = express();
 app.use(cors());
 
+
 const PORT = process.env.PORT || 5050;
 const FILE_SIZE_LIMIT = 5 * 1024 * 1024;
 const s3Client = new S3Client({
