@@ -51,14 +51,14 @@ function StatsPage() {
     try {
       setFriendStats([]);
       const response = await axios.get(
-        `${url}/player/${id}/stats/compare/${friendId}`, {
+        `${url}/player/${id}/stats/compare/${friendId}`,
+        {
           headers: {
-            'ngrok-skip-browser-warning': '1'
+            "ngrok-skip-browser-warning": "1",
           },
         }
       );
       setFriendStats([...friendStats, ...response.data]);
-      console.log(response)
     } catch (err) {
       alert("Error: ", err);
     }
