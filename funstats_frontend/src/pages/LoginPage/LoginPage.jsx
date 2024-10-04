@@ -22,6 +22,7 @@ function LoginPage({ setIsLoggedIn }) {
         {
           headers: {
             "ngrok-skip-browser-warning": "1",
+            "Origin": "window.location.origin",
           },
         }
       );
