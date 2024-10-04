@@ -32,7 +32,7 @@ app.use("/", authRoutes);
 app.use("/player", playerRoutes);
 app.use("/stats", statRoutes);
 
-app.post("/player/add/upload", async (req, res) => {
+app.post("/presigned-url", async (req, res) => {
   const { contentLength } = req.body;
   if (contentLength > FILE_SIZE_LIMIT) {
     return res.status(400).json({ error: "File size too large" });
