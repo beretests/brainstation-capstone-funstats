@@ -13,6 +13,7 @@ export const options = [
 ];
 
 export const positions = [
+  { value: "", label: "Select your best position" },
   { value: "Goalkeeper", label: "Goalkeeper" },
   { value: "Center Back", label: "Center Back" },
   { value: "Full Back", label: "Full Back" },

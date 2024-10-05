@@ -4,6 +4,7 @@ import knexfile from "../knexfile.js";
 const knex = initKnex(knexfile);
 import "dotenv/config";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 const router = express.Router();
 
@@ -25,7 +26,11 @@ function authorize(req, res, next) {
 }
 
 router.post("/signup", async (req, res) => {
-  const { username, name, password, profile_pic, DOB, position } = req.body;
+  let { username, name, password, profile_pic, DOB, position } = req.body;
+
+  profile_pic =
+    profile_pic ||
+    "https://funstats-images.beretesting.com/default_profile_pic.jpg";
 
   if (!username || !name || !password || !DOB || !position) {
     return res.status(400).json({
@@ -34,7 +39,11 @@ router.post("/signup", async (req, res) => {
   }
 
   try {
-    const data = await knex("players").insert(req.body);
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    password = hashedPassword;
+    const newPlayer = { username, name, password, profile_pic, DOB, position };
+    await knex("players").insert(newPlayer);
     res.status(201).json("Successfully created player");
   } catch (error) {
     res.status(500).json({ message: `Unable to create player: ${error}` });
@@ -45,7 +54,9 @@ router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
   const player = await knex("players").where({ username: username }).first();
-  if (!player || password !== player.password) {
+  const passwordMatch = await bcrypt.compare(password, player.password);
+  if (!player || !passwordMatch) {
+    // || password !== player.password
     return res.status(401).send("Invalid username or password");
   }
 

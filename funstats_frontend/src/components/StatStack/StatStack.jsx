@@ -75,15 +75,16 @@ function StatStack({ friendStats }) {
             gap={6}
             className="mb-4 flex-wrap d-none d-md-flex align-items-center"
           >
-            <Image
+            {/* <Image
               src={player.profile_pic}
               alt={player.name}
               thumbnail
               width={100}
               height={100}
-            />
+            /> */}
             <Card>
               <Card.Body>
+                <Card.Img src={player.profile_pic} />
                 <Card.Title>{player.name}</Card.Title>
                 <Card.Text>
                   {Object.keys(maxValues)
