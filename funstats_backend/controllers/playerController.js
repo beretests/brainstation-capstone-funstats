@@ -63,26 +63,26 @@ export const addStat = async (req, res) => {
   }
 };
 
-export const addPlayer = async (req, res) => {
-  const { username, name, password, DOB, position } = req.body;
+// export const addPlayer = async (req, res) => {
+//   const { username, name, password, DOB, position } = req.body;
 
-  const newPlayer = {
-    username,
-    name,
-    password,
-    DOB,
-    position,
-    profile_pic:
-      "https://funstats-images.beretesting.com/default_profile_pic.jpg",
-  };
+//   const newPlayer = {
+//     username,
+//     name,
+//     password,
+//     DOB,
+//     position,
+//     profile_pic:
+//       "https://funstats-images.beretesting.com/default_profile_pic.jpg",
+//   };
 
-  try {
-    await knex("players").insert(newPlayer);
-    res.status(201).json("Successfully added new player");
-  } catch (error) {
-    res.status(500).json({ message: `Unable to create player: ${error}` });
-  }
-};
+//   try {
+//     await knex("players").insert(newPlayer);
+//     res.status(201).json("Successfully added new player");
+//   } catch (error) {
+//     res.status(500).json({ message: `Unable to create player: ${error}` });
+//   }
+// };
 
 export const updatePlayer = async (req, res) => {
   try {

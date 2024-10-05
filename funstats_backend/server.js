@@ -24,6 +24,7 @@ const s3Client = new S3Client({
 });
 
 app.use(express.json());
+
 app.get("/", (_req, res) => {
   res.send("Welcome to FunStats API");
 });

@@ -26,3 +26,4 @@ dist-ssr
 .env
 *.css
 delete-this.js
+hashed*

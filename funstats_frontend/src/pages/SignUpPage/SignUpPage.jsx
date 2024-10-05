@@ -2,13 +2,22 @@ import "./SignUpPage.scss";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, InputGroup, Col, Form, Row } from "react-bootstrap";
 import { positions } from "../../data/data";
+import Alert from "react-bootstrap/Alert";
+import { EyeFill, EyeSlashFill } from "react-bootstrap-icons";
 
 function SignUpPage() {
   const [validated, setValidated] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
   const [picPublicUrl, setPicPublicUrl] = useState("");
   const [profilePic, setProfilePic] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword); // Toggle between true and false
+  };
   const [formData, setFormData] = useState({
     DOB: "",
     username: "",
@@ -18,8 +27,7 @@ function SignUpPage() {
     profile_pic: "",
   });
   const url = import.meta.env.VITE_API_URL;
-  // TODO: signup requests should go to the signup auth route
-  const signupUrl = `${url}/player/add`;
+  const signupUrl = `${url}/signup`;
   const navigate = useNavigate();
 
   async function getImagePublicUrl() {
@@ -87,8 +95,8 @@ function SignUpPage() {
 
   const handleSignup = async (e) => {
     const form = e.currentTarget;
+    e.preventDefault();
     if (form.checkValidity() === false) {
-      e.preventDefault();
       e.stopPropagation();
     }
 
@@ -96,16 +104,27 @@ function SignUpPage() {
 
     try {
       console.log("Form Data: ", JSON.stringify(formData));
-      await axios.post(signupUrl, formData);
+      const response = await axios.post(signupUrl, formData);
+      console.log(response);
       navigate("/");
     } catch (error) {
-      console.error(error);
+      const errorMsg =
+        error.response?.data?.message ||
+        "An unexpected error occurred. Please try again in a few minutes.";
+      setErrorMessage(errorMsg);
+      setShowAlert(true);
     }
   };
 
   return (
     <div className="signup">
       <h2 className="signup__heading">Sign Up</h2>
+      {showAlert && (
+        <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
+          <Alert.Heading>Error</Alert.Heading>
+          <p>{errorMessage}</p>
+        </Alert>
+      )}
       <Form noValidate validated={validated} onSubmit={handleSignup}>
         <Form.Group as={Row} className="mb-3" controlId="formUsername">
           <Form.Label column sm={2}>
@@ -146,15 +165,24 @@ function SignUpPage() {
             Password
           </Form.Label>
           <Col sm={10}>
-            <Form.Control
-              required
-              type="password"
-              placeholder="Password"
-              onChange={handlePasswordChange}
-            />
-            <Form.Control.Feedback type="invalid">
-              Please enter your password.
-            </Form.Control.Feedback>
+            <InputGroup>
+              <Form.Control
+                required
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                onChange={handlePasswordChange}
+              />
+              <Button
+                // variant="outline-secondary"
+                onClick={togglePasswordVisibility}
+                aria-label="Toggle password visibility"
+              >
+                {showPassword ? <EyeSlashFill /> : <EyeFill />}
+              </Button>
+              <Form.Control.Feedback type="invalid">
+                Please enter your password.
+              </Form.Control.Feedback>
+            </InputGroup>
           </Col>
         </Form.Group>
 
