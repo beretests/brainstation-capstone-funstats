@@ -40,7 +40,12 @@ function LoginPage({ setIsLoggedIn }) {
       const id = response.data.id;
       setIsLoggedIn(true);
 
-      navigate(`/player/${id}`);
+      navigate(`/player/${id}`, {
+        state: {
+          mesage:
+            "Successfully logged in. You can now add friends to compare your stats!",
+        },
+      });
     } catch (error) {
       console.log("Error: ", error);
     }

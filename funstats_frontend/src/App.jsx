@@ -8,6 +8,7 @@ import StatsPage from "./pages/StatsPage/StatsPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import FriendsPage from "./pages/FriendsPage/FriendsPage";
 
 function App() {
   const id = sessionStorage.getItem("userId");
@@ -40,6 +41,14 @@ function App() {
             element={
               <PrivateRoute>
                 <StatsPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/player/:id/friends"
+            element={
+              <PrivateRoute>
+                <FriendsPage />
               </PrivateRoute>
             }
           />

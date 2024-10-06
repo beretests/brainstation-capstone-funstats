@@ -9,11 +9,10 @@ import {
   FloatingLabel,
 } from "react-bootstrap";
 import axios from "axios";
+import { getAge } from "../../utils/getAge";
 
 function FriendsList({
   friends,
-  getAge,
-  handleCompareStats,
   id,
   friendStats,
   setFriendStats,
@@ -24,11 +23,15 @@ function FriendsList({
   const friendUrl = `${url}/player/${id}/friends`;
   const [friendUsername, setFriendUsername] = useState("");
 
+  const handleCompareStats = async (id, friendId) => {
+    navigate(`/player/${id}/stats/compare/${friendId}`);
+  };
+
   const handleUsernameChange = (e) => {
     setFriendUsername(e.target.value);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
     try {
       console.log(id);
       await axios.post(friendUrl, { username: friendUsername });
