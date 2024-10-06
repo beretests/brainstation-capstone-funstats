@@ -2,7 +2,7 @@ import "./SignUpPage.scss";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Button, InputGroup, Col, Form, Row } from "react-bootstrap";
+import { Button, InputGroup, Col, Form, Row, Spinner } from "react-bootstrap";
 import { positions } from "../../data/data";
 import Alert from "react-bootstrap/Alert";
 import { EyeFill, EyeSlashFill } from "react-bootstrap-icons";
@@ -14,6 +14,7 @@ function SignUpPage() {
   const [picPublicUrl, setPicPublicUrl] = useState("");
   const [profilePic, setProfilePic] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword); // Toggle between true and false
@@ -49,6 +50,7 @@ function SignUpPage() {
   useEffect(() => {
     if (profilePic) {
       getImagePublicUrl();
+      setIsUploading(false);
     }
   }, [profilePic]);
 
@@ -90,6 +92,7 @@ function SignUpPage() {
     const file = e.target.files[0];
     if (file) {
       setProfilePic(file);
+      setIsUploading(true);
     }
   };
 
@@ -106,7 +109,11 @@ function SignUpPage() {
       console.log("Form Data: ", JSON.stringify(formData));
       const response = await axios.post(signupUrl, formData);
       console.log(response);
-      navigate("/");
+      navigate("/", {
+        state: {
+          message: "Sign-up successful! Welcome!",
+        },
+      });
     } catch (error) {
       const errorMsg =
         error.response?.data?.message ||
@@ -222,13 +229,22 @@ function SignUpPage() {
           </Form.Label>
           <Col sm={10}>
             <Form.Control type="file" onChange={handleUpload} />
+            {isUploading && (
+              <div className="mb-3">
+                <Spinner animation="border" role="status">
+                  <span className="visually-hidden">Uploading...</span>
+                </Spinner>
+              </div>
+            )}
             {picPublicUrl && <p>Uploaded file: {profilePic.name}</p>}
           </Col>
         </Form.Group>
 
         <Form.Group as={Row} className="mb-3">
           <Col sm={{ span: 10, offset: 2 }}>
-            <Button type="submit">Sign up</Button>
+            <Button type="submit" disabled={isUploading}>
+              Sign up
+            </Button>
           </Col>
         </Form.Group>
       </Form>

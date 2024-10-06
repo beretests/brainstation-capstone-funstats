@@ -2,6 +2,7 @@ import heroImage from "./../../assets/images/hero.jpg";
 import soccerField from "./../../assets/images/field1.jpg";
 import "./HomePage.scss";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
   Card,
   Button,
@@ -9,11 +10,37 @@ import {
   ButtonToolbar,
   Alert,
 } from "react-bootstrap";
+import { useState, useEffect } from "react";
 
 function HomePage() {
+  const location = useLocation();
+  const message = location.state?.message;
+
+  const [showAlert, setShowAlert] = useState(!!message);
+
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setShowAlert(false);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
   return (
     <>
       <div className="home">
+        {showAlert && message && (
+          <Alert
+            variant="success"
+            className="mt-3"
+            dismissable
+            onClose={() => setShowAlert(false)}
+          >
+            {message}
+          </Alert>
+        )}
         <Card className="blurb-card">
           <Card.Body className="blurb-card__body">
             <Card.Title className="home__page-header">FunStats</Card.Title>
