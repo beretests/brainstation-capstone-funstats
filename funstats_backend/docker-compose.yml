@@ -1,5 +1,5 @@
 services:
-  express-app:
+  funstats-api:
     build: .
     ports:
       - "5050:5050" # Map container port 3000 to host port 3000
@@ -22,7 +22,22 @@ services:
       - "3306:3306" # Map MySQL port
     volumes:
       - mysql-data:/var/lib/mysql
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf
     restart: unless-stopped
+    networks:
+      - express-network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - "8443:8443"
+    volumes:
+      - ./nginx-conf:/etc/nginx/conf.d
+      - ./ssl:/etc/ssl
+    depends_on:
+      - funstats-api
     networks:
       - express-network
 

@@ -27,3 +27,4 @@ dist-ssr
 *.css
 delete-this.js
 hashed*
+*/ssl/*
