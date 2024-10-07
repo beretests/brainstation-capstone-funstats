@@ -1,5 +1,3 @@
-import heroImage from "./../../assets/images/hero.jpg";
-import soccerField from "./../../assets/images/field1.jpg";
 import "./HomePage.scss";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -64,7 +62,7 @@ function HomePage() {
         <Card className="image-card">
           <Card.Img
             variant="top"
-            src={heroImage}
+            src="https://funstats-images.beretesting.com/hero.jpg"
             alt="kids around a soccer ball"
             className="image-card__image"
           />

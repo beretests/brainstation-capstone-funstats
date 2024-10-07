@@ -33,10 +33,12 @@ function FriendsList({
 
   const handleSubmit = async (e) => {
     try {
-      console.log(id);
+      const form = e.currentTarget;
+      e.preventDefault();
       await axios.post(friendUrl, { username: friendUsername });
       setFriendAdded(true);
       setShowAlert(true);
+      form.reset();
     } catch (error) {
       console.error(error);
     }
@@ -46,20 +48,22 @@ function FriendsList({
       <div className="friends-container">
         <h2 className="friends__heading">Friends</h2>
         <Stack gap={2} className="col-md-5 mx-auto friends__stack">
-          <FloatingLabel
-            controlId="friendUserName"
-            label="Add new friend (username)"
-            className="mb-3"
-          >
-            <Form.Control
-              className="me-auto"
-              placeholder="Add friend's username here"
-              onChange={handleUsernameChange}
-            />
-          </FloatingLabel>
-          <Button variant="secondary" onClick={handleSubmit}>
-            Add Friend
-          </Button>
+          <Form onSubmit={handleSubmit}>
+            <FloatingLabel
+              controlId="friendUserName"
+              label="Add new friend (username)"
+              className="mb-3"
+            >
+              <Form.Control
+                className="me-auto"
+                placeholder="Add friend's username here"
+                onChange={handleUsernameChange}
+              />
+            </FloatingLabel>
+            <Button variant="secondary" type="submit">
+              Add Friend
+            </Button>
+          </Form>
         </Stack>
         <div className="friends">
           {friends.map((friend) => (

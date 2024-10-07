@@ -42,8 +42,8 @@ function LoginPage({ setIsLoggedIn }) {
 
       navigate(`/player/${id}`, {
         state: {
-          mesage:
-            "Successfully logged in. You can now add friends to compare your stats!",
+          message:
+            "Successfully logged in. You can now view and update your stats as well as add friends to compare your stats!",
         },
       });
     } catch (error) {
