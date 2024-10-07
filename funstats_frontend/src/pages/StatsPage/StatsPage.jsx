@@ -1,7 +1,7 @@
 import "./StatsPage.scss";
-import AddStatsForm from "../../components/AddStatsForm/AddStatsForm";
-import { useParams } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
+// import AddStatsForm from "../../components/AddStatsForm/AddStatsForm";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { getAggregateStats } from "../../utils/getAggregateStats";
 import StatsTable from "../../components/StatsTable/StatsTable";
 import StatStack from "../../components/StatStack/StatStack";
@@ -11,14 +11,26 @@ import { Stack, Button, Alert } from "react-bootstrap";
 function StatsPage() {
   const { id, friendId } = useParams();
   const [playerAggregateStats, setPlayerAggregateStats] = useState({});
-  const [isVisible, setIsVisible] = useState(false);
+  // const [isVisible, setIsVisible] = useState(false);
   const [friendStats, setFriendStats] = useState([]);
-  const [statAdded, setStatAdded] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
+  const url = import.meta.env.VITE_API_URL;
+  const navigate = useNavigate();
+
+  const location = useLocation();
+  const message = location.state?.message;
+  const [showAlert, setShowAlert] = useState(!!message);
+
   // const alertRef = useRef(null);
   // const elementRef = useRef(null);
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setShowAlert(false);
+      }, 5000);
 
-  const url = import.meta.env.VITE_API_URL;
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
 
   useEffect(() => {
     getAggregateStats(id, setPlayerAggregateStats);
@@ -39,12 +51,13 @@ function StatsPage() {
   // }, [statAdded]);
 
   const handleClick = () => {
-    setIsVisible(true);
-    setTimeout(() => {
-      if (elementRef.current) {
-        elementRef.current.scrollIntoView({ behaviour: "smooth" });
-      }
-    }, 100);
+    navigate(`/player/${id}/stats/add`);
+    // setIsVisible(true);
+    // setTimeout(() => {
+    //   if (elementRef.current) {
+    //     elementRef.current.scrollIntoView({ behaviour: "smooth" });
+    //   }
+    // }, 100);
   };
 
   const handleCompareStats = async (id, friendId) => {
@@ -69,6 +82,16 @@ function StatsPage() {
         <StatStack id={id} friendId={friendId} friendStats={friendStats} />
       ) : (
         <div className="stats">
+          {showAlert && message && (
+            <Alert
+              variant="success"
+              className="mt-3"
+              dismissible
+              onClose={() => setShowAlert(false)}
+            >
+              {message}
+            </Alert>
+          )}
           {/* {showAlert && (
             <Alert showAlert={showAlert} variant="success">
               Successfully added new stats for a game. Way to go! 🏆
@@ -80,15 +103,6 @@ function StatsPage() {
               Add New Game Stat
             </Button>
           </Stack>
-
-          {/* {isVisible && (
-            <AddStatsForm
-              ref={elementRef}
-              setIsVisible={setIsVisible}
-              setStatAdded={setStatAdded}
-              setShowAlert={setShowAlert}
-            />
-          )} */}
         </div>
       )}
     </>

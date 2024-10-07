@@ -15,6 +15,7 @@ function SignUpPage() {
   const [profilePic, setProfilePic] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const today = new Date().toISOString().split("T")[0];
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword); // Toggle between true and false
@@ -198,7 +199,12 @@ function SignUpPage() {
             Date of Birth
           </Form.Label>
           <Col sm={10}>
-            <Form.Control required type="date" onChange={handleDateChange} />
+            <Form.Control
+              required
+              type="date"
+              onChange={handleDateChange}
+              max={today}
+            />
             <Form.Control.Feedback type="invalid">
               Please choose your date of birth.
             </Form.Control.Feedback>
