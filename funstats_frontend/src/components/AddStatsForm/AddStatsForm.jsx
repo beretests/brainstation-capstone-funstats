@@ -5,18 +5,18 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Form, Button } from "react-bootstrap";
 
-function AddStatsForm({ setStatAdded, setIsVisible, setShowAlert }) {
-  const { id } = useParams();
-  const url = import.meta.env.VITE_API_URL;
+function AddStatsForm({ handleSubmit, setFormData, formData }) {
+  // const { id } = useParams();
+  // const url = import.meta.env.VITE_API_URL;
   const today = new Date().toISOString().split("T")[0];
 
-  const [formData, setFormData] = useState({
-    player_id: id,
-    date: today,
-    game: "",
-    selectedOptions: [],
-    optionValues: {},
-  });
+  // const [formData, setFormData] = useState({
+  //   player_id: id,
+  //   date: today,
+  //   game: "",
+  //   selectedOptions: [],
+  //   optionValues: {},
+  // });
 
   const handleSelectChange = (e) => {
     const selectedOptions = Array.from(
@@ -49,27 +49,27 @@ function AddStatsForm({ setStatAdded, setIsVisible, setShowAlert }) {
     setFormData({ ...formData, game: value });
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const epochDate = Math.floor(new Date(formData.date).getTime() / 1000);
-    const finalFormData = {
-      ...formData,
-      date: epochDate,
-      ...formData.optionValues,
-    };
-    delete finalFormData.optionValues;
-    delete finalFormData.selectedOptions;
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   const epochDate = Math.floor(new Date(formData.date).getTime() / 1000);
+  //   const finalFormData = {
+  //     ...formData,
+  //     date: epochDate,
+  //     ...formData.optionValues,
+  //   };
+  //   delete finalFormData.optionValues;
+  //   delete finalFormData.selectedOptions;
 
-    try {
-      await axios.post(`${url}/player/${id}/stats/add`, finalFormData);
-      setStatAdded(true);
-      setIsVisible(false);
-      setShowAlert(true);
-    } catch (err) {
-      console.log("Error adding stat: ", err);
-      alert("Error adding stat!");
-    }
-  };
+  //   try {
+  //     await axios.post(`${url}/player/${id}/stats/add`, finalFormData);
+  //     setStatAdded(true);
+  //     setIsVisible(false);
+  //     setShowAlert(true);
+  //   } catch (err) {
+  //     console.log("Error adding stat: ", err);
+  //     alert("Error adding stat!");
+  //   }
+  // };
 
   return (
     <>
@@ -115,6 +115,7 @@ function AddStatsForm({ setStatAdded, setIsVisible, setShowAlert }) {
               <Form.Label>{option.replace(/_/g, " ").toUpperCase()}</Form.Label>
               <Form.Control
                 type="number"
+                min="0"
                 value={formData.optionValues[option] || ""}
                 onChange={(e) => handleOptionValueChange(option, e)}
                 className="stats__input"
