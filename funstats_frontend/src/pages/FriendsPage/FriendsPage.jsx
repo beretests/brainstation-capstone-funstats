@@ -44,8 +44,9 @@ function FriendsPage() {
     <>
       <div className="friendlist">
         {showAlert && (
-          <Alert variant="success">
-            You successfully added a new friend! 🤝
+          <Alert variant="success" dismissible>
+            You successfully added a new friend! 🤝 Who will win the stats
+            challenge?
           </Alert>
         )}
         <FriendsList

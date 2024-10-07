@@ -2,7 +2,7 @@ import React from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import "./ProfilePage.scss";
 import { getAge } from "../../utils/getAge";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
 import { Stack, Card, Button, Alert } from "react-bootstrap";
@@ -11,13 +11,12 @@ function ProfilePage() {
   const { id } = useParams();
   const url = import.meta.env.VITE_API_URL;
   const profileUrl = `${url}/profile`;
-  const [showAlert, setShowAlert] = useState(false);
-  const alertRef = useRef(null);
 
   const navigate = useNavigate();
   const [profileData, setProfileData] = useState(null);
   const location = useLocation();
   const message = location.state?.message;
+  const [showAlert, setShowAlert] = useState(!!message);
 
   const token = sessionStorage.getItem("JWTtoken");
   const getProfile = async () => {
@@ -70,7 +69,7 @@ function ProfilePage() {
         <Alert
           variant="success"
           className="mt-3"
-          dismissable
+          dismissible
           onClose={() => setShowAlert(false)}
         >
           {message}

@@ -17,7 +17,7 @@ export const playerStatAggregates = async (req, res) => {
   try {
     const data = await knex("stats")
       .join("players", "stats.player_id", "=", "players.id")
-      .select("players.name", "players.profile_pic", "players.id")
+      .select("players.name", "players.profile_pic", "stats.id")
       .where({ player_id: req.params.id })
       .sum({
         goals_scored: "goals_scored",
