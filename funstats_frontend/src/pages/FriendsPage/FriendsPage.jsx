@@ -10,7 +10,7 @@ function FriendsPage() {
   const { id } = useParams();
   const url = import.meta.env.VITE_API_URL;
   const friendUrl = `${url}/player/${id}/friends`;
-  const token = sessionStorage.getItem("JWTtoken");
+  // const token = sessionStorage.getItem("JWTtoken");
   const [friends, setFriends] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
   const [friendAdded, setFriendAdded] = useState(false);
@@ -25,11 +25,11 @@ function FriendsPage() {
   };
 
   useEffect(() => {
-    if (!token) {
-      return;
-    }
+    // if (!token) {
+    //   return;
+    // }
     getFriends();
-  }, [token]);
+  }, []);
 
   useEffect(() => {
     if (friendAdded) {
@@ -51,7 +51,7 @@ function FriendsPage() {
         )}
         <FriendsList
           friends={friends}
-          id={id}
+          // id={id}
           setFriendAdded={setFriendAdded}
           setShowAlert={setShowAlert}
         />

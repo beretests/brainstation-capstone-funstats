@@ -1,5 +1,5 @@
 import "./LoginPage.scss";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
@@ -7,10 +7,12 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Alert from "react-bootstrap/Alert";
 import { EyeFill, EyeSlashFill } from "react-bootstrap-icons";
+import { useAuth } from "../../utils/authProvider";
 
-function LoginPage({ setIsLoggedIn }) {
+function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [validated, setValidated] = useState(false);
+  const { login, playerId } = useAuth();
   const [errorMessage, setErrorMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
@@ -18,7 +20,7 @@ function LoginPage({ setIsLoggedIn }) {
   const loginUrl = `${url}/login`;
 
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword); // Toggle between true and false
+    setShowPassword(!showPassword);
   };
 
   const handleLogin = async (e) => {
@@ -37,10 +39,12 @@ function LoginPage({ setIsLoggedIn }) {
       });
       sessionStorage.setItem("JWTtoken", response.data.token);
       sessionStorage.setItem("userId", response.data.id);
-      const id = response.data.id;
-      setIsLoggedIn(true);
+      login(
+        sessionStorage.getItem("JWTtoken"),
+        sessionStorage.getItem("userId")
+      );
 
-      navigate(`/player/${id}`, {
+      navigate(`/player/${playerId}`, {
         state: {
           message:
             "Successfully logged in. You can now view and update your stats as well as add friends to compare your stats!",

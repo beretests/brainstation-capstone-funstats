@@ -19,6 +19,7 @@ export const up = function (knex) {
         .inTable("players")
         .onUpdate("CASCADE")
         .onDelete("CASCADE");
+      table.string("season").notNullable();
       table.string("game").notNullable();
       table.integer("goals_scored").defaultTo(0);
       table.integer("assists").defaultTo(0);

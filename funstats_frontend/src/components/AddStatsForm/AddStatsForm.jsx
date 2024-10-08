@@ -1,22 +1,9 @@
 import "./AddStatsForm.scss";
-import { useState } from "react";
 import { options } from "../../data/data";
-import { useParams } from "react-router-dom";
-import axios from "axios";
 import { Form, Button } from "react-bootstrap";
 
 function AddStatsForm({ handleSubmit, setFormData, formData }) {
-  // const { id } = useParams();
-  // const url = import.meta.env.VITE_API_URL;
   const today = new Date().toISOString().split("T")[0];
-
-  // const [formData, setFormData] = useState({
-  //   player_id: id,
-  //   date: today,
-  //   game: "",
-  //   selectedOptions: [],
-  //   optionValues: {},
-  // });
 
   const handleSelectChange = (e) => {
     const selectedOptions = Array.from(
@@ -49,33 +36,21 @@ function AddStatsForm({ handleSubmit, setFormData, formData }) {
     setFormData({ ...formData, game: value });
   };
 
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   const epochDate = Math.floor(new Date(formData.date).getTime() / 1000);
-  //   const finalFormData = {
-  //     ...formData,
-  //     date: epochDate,
-  //     ...formData.optionValues,
-  //   };
-  //   delete finalFormData.optionValues;
-  //   delete finalFormData.selectedOptions;
-
-  //   try {
-  //     await axios.post(`${url}/player/${id}/stats/add`, finalFormData);
-  //     setStatAdded(true);
-  //     setIsVisible(false);
-  //     setShowAlert(true);
-  //   } catch (err) {
-  //     console.log("Error adding stat: ", err);
-  //     alert("Error adding stat!");
-  //   }
-  // };
-
   return (
     <>
       <section className="stats">
         <h3 className="stats__title">Enter new game stat</h3>
         <Form onSubmit={handleSubmit} className="stats__form-add">
+          {/* <Form.Group className="mb-3" controlId="formDate">
+            <Form.Label className="stats__date-label">DATE</Form.Label>
+            <Form.Control
+              type="date"
+              value={formData.date}
+              max={today}
+              onChange={handleDateChange}
+            />
+          </Form.Group> */}
+
           <Form.Group className="mb-3" controlId="formDate">
             <Form.Label className="stats__date-label">DATE</Form.Label>
             <Form.Control
