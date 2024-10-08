@@ -10,21 +10,25 @@ import {
 } from "react-bootstrap";
 import axios from "axios";
 import { getAge } from "../../utils/getAge";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../utils/authProvider";
 
 function FriendsList({
   friends,
-  id,
-  friendStats,
-  setFriendStats,
+  // friendStats,
+  // setFriendStats,
   setFriendAdded,
   setShowAlert,
 }) {
+  // const {friendId} = req.
+  const { playerId, season } = useAuth();
   const url = import.meta.env.VITE_API_URL;
-  const friendUrl = `${url}/player/${id}/friends`;
+  const friendUrl = `${url}/player/${playerId}/friends`;
   const [friendUsername, setFriendUsername] = useState("");
+  const navigate = useNavigate();
 
-  const handleCompareStats = async (id, friendId) => {
-    navigate(`/player/${id}/stats/compare/${friendId}`);
+  const handleCompareStats = async (id, friendId, season) => {
+    navigate(`/player/${id}/stats/${season}/compare/${friendId}`);
   };
 
   const handleUsernameChange = (e) => {
@@ -93,10 +97,11 @@ function FriendsList({
                     className="friends__button"
                     onClick={() =>
                       handleCompareStats(
-                        id,
+                        playerId,
                         friend.id,
-                        friendStats,
-                        setFriendStats
+                        season
+                        // friendStats,
+                        // setFriendStats
                       )
                     }
                   >

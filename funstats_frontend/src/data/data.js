@@ -30,3 +30,4 @@ export const positions = [
   { value: "Striker", label: "Striker" },
   { value: "Center Forward", label: "Center Forward" },
 ];
+export const seasons = [{ value: "", label: "Select a season" }];

@@ -1,7 +1,7 @@
-import "./StatsTable.scss";
+import "./PersonalStats.scss";
 import { Stack, Image, Card, Table } from "react-bootstrap";
 
-function StatsTable({ stats }) {
+function PersonalStats({ stats, season }) {
   const rows = [];
   rows.push(stats);
   const personalInfoKeys = ["name", "id", "profile_pic"];
@@ -9,7 +9,15 @@ function StatsTable({ stats }) {
   return (
     <>
       <div className="playerStats">
-        <h2 className="playerStats__heading">My Stats</h2>
+        <h2 className="playerStats__heading">
+          My Stats for{" "}
+          {season
+            .replace(/_/g, " ")
+            .split(" ")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ")}{" "}
+          season
+        </h2>
 
         {rows.map((player) => (
           <Stack
@@ -53,4 +61,4 @@ function StatsTable({ stats }) {
   );
 }
 
-export default StatsTable;
+export default PersonalStats;

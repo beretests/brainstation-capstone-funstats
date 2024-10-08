@@ -17,8 +17,8 @@ export const playerStatAggregates = async (req, res) => {
   try {
     const data = await knex("stats")
       .join("players", "stats.player_id", "=", "players.id")
-      .select("players.name", "players.profile_pic", "stats.id")
-      .where({ player_id: req.params.id })
+      .select("players.name", "players.profile_pic", "players.id")
+      .where({ player_id: req.params.id, "stats.season": req.params.season })
       .sum({
         goals_scored: "goals_scored",
         assists: "assists",
@@ -37,7 +37,9 @@ export const playerStatAggregates = async (req, res) => {
     if (!data) {
       return res
         .status(404)
-        .send(`Player id: ${req.params.id} has no stats added yet.`);
+        .send(
+          `Player id: ${req.params.id} has no stats added yet for season ${req.params.season}.`
+        );
     }
 
     res.json(data[0]);
@@ -98,8 +100,11 @@ export const compareStat = async (req, res) => {
     const stats = await knex("stats")
       .join("players", "stats.player_id", "=", "players.id")
       .select("players.name", "players.profile_pic", "players.id")
-      .where({ player_id: req.params.id })
-      .orWhere({ player_id: req.params.friendId })
+      .where({ player_id: req.params.id, season: req.params.season })
+      .orWhere({
+        player_id: req.params.friendId,
+        season: req.params.season,
+      })
       .sum({
         goals_scored: "goals_scored",
         assists: "assists",

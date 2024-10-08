@@ -1,12 +1,14 @@
 import "./Header.scss";
 import { NavLink, Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../utils/authProvider";
 
-function Header({ id, isLoggedIn, setIsLoggedIn }) {
+function Header() {
   const navigate = useNavigate();
+  const { logout, isAuthenticated, playerId } = useAuth();
 
   const handleLogout = () => {
     sessionStorage.clear();
-    setIsLoggedIn(false);
+    logout();
     navigate("/");
   };
 
@@ -21,10 +23,10 @@ function Header({ id, isLoggedIn, setIsLoggedIn }) {
         <h1 className="header__title">FunStats</h1>
       </Link>
 
-      {id || isLoggedIn ? (
+      {isAuthenticated ? (
         <nav className="header__links">
           <NavLink
-            to={`/player/${id}`}
+            to={`/player/${playerId}`}
             className={(isActive) =>
               "header__item" + (isActive ? "header__item--active" : "")
             }
@@ -32,12 +34,12 @@ function Header({ id, isLoggedIn, setIsLoggedIn }) {
             Profile
           </NavLink>
           <NavLink
-            to={`/player/${id}/stats`}
+            to={`/player/${playerId}/friends`}
             className={(isActive) =>
               "header__item" + (isActive ? "header__item--active" : "")
             }
           >
-            Stats
+            Friends
           </NavLink>
           <NavLink
             to={"/"}

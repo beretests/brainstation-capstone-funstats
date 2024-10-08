@@ -18,7 +18,7 @@ function SignUpPage() {
   const today = new Date().toISOString().split("T")[0];
 
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword); // Toggle between true and false
+    setShowPassword(!showPassword);
   };
   const [formData, setFormData] = useState({
     DOB: "",

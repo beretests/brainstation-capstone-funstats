@@ -1,12 +1,15 @@
 import axios from "axios";
 
-export const getAggregateStats = async (id, setPlayerAggregateStats) => {
+export const getAggregateStats = async (
+  id,
+  setPlayerAggregateStats,
+  season
+) => {
   const url = import.meta.env.VITE_API_URL;
 
   try {
-    const response = await axios.get(`${url}/player/${id}/stats`, 
-    );
-    console.log("STATS: ", response.data);
+    const response = await axios.get(`${url}/player/${id}/stats/${season}`);
+    // console.log("STATS: ", response.data);
     setPlayerAggregateStats(response.data);
   } catch (err) {
     alert("Error: ", err);

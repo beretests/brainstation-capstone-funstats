@@ -8,9 +8,11 @@ router
   .get(playerController.singlePlayer)
   .patch(playerController.updatePlayer);
 
-router.route("/:id/stats").get(playerController.playerStatAggregates);
+router.route("/:id/stats/:season").get(playerController.playerStatAggregates);
 router.route("/:id/stats/add").post(playerController.addStat);
-router.route("/:id/stats/compare/:friendId").get(playerController.compareStat);
+router
+  .route("/:id/stats/:season/compare/:friendId")
+  .get(playerController.compareStat);
 // router.route("/add").post(playerController.addPlayer);
 
 router

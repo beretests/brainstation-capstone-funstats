@@ -56,7 +56,6 @@ router.post("/login", async (req, res) => {
   const player = await knex("players").where({ username: username }).first();
   const passwordMatch = await bcrypt.compare(password, player.password);
   if (!player || !passwordMatch) {
-    // || password !== player.password
     return res.status(401).send("Invalid username or password");
   }
 
