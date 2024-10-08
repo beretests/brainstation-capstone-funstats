@@ -130,7 +130,7 @@ export default [
     date: "1724123747",
     player_id: "bd9c78f3-4442-4876-8f9e-1a869afcf6da",
     game: "Game 21",
-    season: "test_season",
+    season: "indoor_2024/25",
     goals_scored: 0,
     assists: 0,
     shots_on_target: 0,
