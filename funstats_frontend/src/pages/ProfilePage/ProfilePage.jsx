@@ -6,22 +6,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
 import { Stack, Card, Button, Alert } from "react-bootstrap";
-import SelectSeasonModal from "../../components/SelectSeasonModal/SelectSeasonModal";
+import { useAuth } from "../../utils/authProvider";
 
 function ProfilePage() {
   const { id } = useParams();
   const url = import.meta.env.VITE_API_URL;
   const profileUrl = `${url}/profile`;
-  const seasonUrl = `${url}/stats/seasons`;
-  const [seasons, setSeasons] = useState([]);
-  const getSeasonsList = async () => {
-    try {
-      const response = await axios.get(seasonUrl);
-      setSeasons(response.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const { season, token } = useAuth();
 
   const navigate = useNavigate();
   const [profileData, setProfileData] = useState(null);
@@ -29,19 +20,6 @@ function ProfilePage() {
   const message = location.state?.message;
   const [showAlert, setShowAlert] = useState(!!message);
 
-  const [show, setShow] = useState(false);
-
-  const handleShow = () => {
-    getSeasonsList();
-    console.log("Seasons: ", seasons);
-    setShow(true);
-  };
-
-  const handleClose = () => {
-    setShow(false);
-  };
-
-  const token = sessionStorage.getItem("JWTtoken");
   const getProfile = async () => {
     try {
       const response = await axios.get(profileUrl, {
@@ -74,6 +52,10 @@ function ProfilePage() {
 
   const handleViewFriends = async () => {
     navigate(`/player/${id}/friends`);
+  };
+
+  const handleViewStats = async () => {
+    navigate(`/player/${id}/stats/${season}`);
   };
 
   if (!profileData)
@@ -118,18 +100,12 @@ function ProfilePage() {
               </Card.Text>
               <Stack gap={2} className="col-md-5 mx-auto profile__stack">
                 <Button
-                  // href={`/player/${id}/stats`}
-                  onClick={() => handleShow()}
+                  onClick={() => handleViewStats()}
                   variant="primary"
                   className="profile__button profile__button-modified"
                 >
                   View Stats
                 </Button>
-                <SelectSeasonModal
-                  show={show}
-                  seasons={seasons}
-                  handleClose={handleClose}
-                />
                 <Button
                   variant="primary"
                   onClick={() => handleViewFriends()}
