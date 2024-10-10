@@ -83,38 +83,36 @@ function StatStack({ friendStats }) {
               height={100}
             />
             <Card>
+              <Card.Title>{player.name}</Card.Title>
               <Card.Body>
                 {/* <Card.Img src={player.profile_pic} /> */}
-                <Card.Title>{player.name}</Card.Title>
-                <Card.Text>
-                  {Object.keys(maxValues)
-                    .filter((item) => !identity.includes(item))
-                    .map((stat) => (
-                      <Row
-                        key={stat}
-                        className="align-items-center text-center mb-2"
-                      >
-                        <Col xs={6} className="fw-bold">
-                          {stat.replace(/_/g, " ").toUpperCase()}
-                        </Col>
-                        <Col xs={6} key={player.id}>
-                          {player[stat]}{" "}
-                          {parseInt(player[stat]) === maxValues[stat] &&
-                            offenses.includes(stat) && (
-                              <Badge bg="danger" className="badge">
-                                ⚠️
-                              </Badge>
-                            )}
-                          {parseInt(player[stat]) === maxValues[stat] &&
-                            !offenses.includes(stat) && (
-                              <Badge bg="success" className="badge">
-                                🏆
-                              </Badge>
-                            )}
-                        </Col>
-                      </Row>
-                    ))}
-                </Card.Text>
+                {Object.keys(maxValues)
+                  .filter((item) => !identity.includes(item))
+                  .map((stat) => (
+                    <Row
+                      key={stat}
+                      className="align-items-center text-center mb-2"
+                    >
+                      <Col xs={6} className="fw-bold">
+                        {stat.replace(/_/g, " ").toUpperCase()}
+                      </Col>
+                      <Col xs={6} key={player.id}>
+                        {player[stat]}{" "}
+                        {parseInt(player[stat]) === maxValues[stat] &&
+                          offenses.includes(stat) && (
+                            <Badge bg="danger" className="badge">
+                              ⚠️
+                            </Badge>
+                          )}
+                        {parseInt(player[stat]) === maxValues[stat] &&
+                          !offenses.includes(stat) && (
+                            <Badge bg="success" className="badge">
+                              🏆
+                            </Badge>
+                          )}
+                      </Col>
+                    </Row>
+                  ))}
               </Card.Body>
             </Card>
           </Stack>

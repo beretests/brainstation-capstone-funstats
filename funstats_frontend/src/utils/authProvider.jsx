@@ -5,7 +5,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [playerId, setPlayerId] = useState(null);
-  const [season, setSeason] = useState(null);
+  const [selectedSeason, setSelectedSeason] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(null);
 
   useEffect(() => {
@@ -30,8 +30,8 @@ export const AuthProvider = ({ children }) => {
     setPlayerId(null);
     sessionStorage.clear();
     setIsAuthenticated(false);
+    setSeason(null);
   };
-  // const isAuthenticated = !!token && !!playerId;
 
   return (
     <AuthContext.Provider
@@ -41,8 +41,9 @@ export const AuthProvider = ({ children }) => {
         login,
         logout,
         playerId,
-        setSeason,
-        season,
+        setSelectedSeason,
+        selectedSeason,
+        token,
       }}
     >
       {children}

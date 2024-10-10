@@ -5,18 +5,48 @@ import { getAggregateStats } from "../../utils/getAggregateStats";
 import PersonalStats from "../../components/PersonalStats/PersonalStats";
 import StatStack from "../../components/StatStack/StatStack";
 import axios from "axios";
-import { Stack, Button, Alert } from "react-bootstrap";
+import { Stack, Button, Alert, Modal, Form, Spinner } from "react-bootstrap";
 
 function StatsPage() {
-  const { id, friendId, season } = useParams();
+  const { id, season, friendId } = useParams();
   const [playerAggregateStats, setPlayerAggregateStats] = useState({});
   const [friendStats, setFriendStats] = useState([]);
   const url = import.meta.env.VITE_API_URL;
+  const seasonUrl = `${url}/stats/seasons`;
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(false);
   const location = useLocation();
   const message = location.state?.message;
   const [showAlert, setShowAlert] = useState(!!message);
+
+  const [seasonList, setSeasonList] = useState([]);
+  const [selectedSeason, setSelectedSeason] = useState(season);
+
+  const getSeasonList = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(seasonUrl);
+      setSeasonList(response.data);
+      setShowModal(true);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (
+      !selectedSeason ||
+      selectedSeason === "null" ||
+      selectedSeason === "undefined"
+    ) {
+      getSeasonList();
+    } else {
+      setSelectedSeason(season);
+    }
+  }, [selectedSeason, season]);
 
   useEffect(() => {
     if (message) {
@@ -30,7 +60,7 @@ function StatsPage() {
 
   useEffect(() => {
     getAggregateStats(id, setPlayerAggregateStats, season);
-  }, [!friendId]);
+  }, [!friendId, selectedSeason]);
 
   const handleClick = () => {
     navigate(`/player/${id}/stats/${season}/add`);
@@ -50,10 +80,56 @@ function StatsPage() {
 
   useEffect(() => {
     handleCompareStats(id, friendId);
-  }, [friendId]);
+  }, [friendId, selectedSeason]);
+
+  if (loading)
+    return (
+      <>
+        <div>
+          <Spinner animation="border" role="status" />
+        </div>
+      </>
+    );
+
+  const handleSeasonSelect = (e) => {
+    const newSeason = e.target.value;
+    setSelectedSeason(newSeason);
+    setShowModal(false);
+
+    const newStatPath = friendId
+      ? `/player/${id}/stats/${newSeason}/compare/${friendId}`
+      : `/player/${id}/stats/${newSeason}`;
+
+    navigate(newStatPath, { replace: true });
+  };
 
   return (
     <>
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Select a Game Season</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {loading ? (
+            <div className="text-center">
+              <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            </div>
+          ) : (
+            <Form.Select onChange={handleSeasonSelect}>
+              <option>Open this select menu</option>
+              <option value="">Choose season...</option>
+              {seasonList.map((season, index) => (
+                <option key={index} value={season.season}>
+                  {season.season}
+                </option>
+              ))}
+              <option value="add-new">Add new season...</option>
+            </Form.Select>
+          )}
+        </Modal.Body>
+      </Modal>
       {friendId ? (
         <StatStack id={id} friendId={friendId} friendStats={friendStats} />
       ) : (

@@ -13,8 +13,6 @@ const PrivateRoutes = () => {
     const storedUserId = sessionStorage.getItem("userId");
 
     if (storedToken && storedUserId) {
-      // setToken(storedToken);
-      // setPlayerId(storedUserId);
       setIsAuthenticated(true);
     } else {
       setIsAuthenticated(false);
