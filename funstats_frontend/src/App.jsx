@@ -6,11 +6,11 @@ import Header from "./components/Header/Header";
 import StatsPage from "./pages/StatsPage/StatsPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
+// import SignUpCloudPage from "./pages/SignUpPage/SignUpCloudPage";
 import FriendsPage from "./pages/FriendsPage/FriendsPage";
 import AddStatPage from "./pages/AddStatPage/AddStatPage";
 import { AuthProvider } from "./utils/authProvider";
 import PrivateRoutes from "./utils/privateRoutes";
-
 // const ThemeContext = createContext(null);
 
 function App() {
@@ -36,6 +36,7 @@ function App() {
               <Route path="/player/:id/friends" element={<FriendsPage />} />
             </Route>
             <Route path="/sign_up" element={<SignUpPage />} />
+            {/* <Route path="/player/:id/update" element={<SignUpCloudPage />} /> */}
             <Route path="/sign_in" element={<LoginPage />} />
           </Routes>
         </AuthProvider>

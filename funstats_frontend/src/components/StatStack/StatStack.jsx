@@ -1,6 +1,16 @@
 import "./StatStack.scss";
-import { Stack, Image, Card, Badge, Spinner, Row, Col } from "react-bootstrap";
-
+import {
+  Stack,
+  Image,
+  Card,
+  Badge,
+  Spinner,
+  Row,
+  Col,
+  CardGroup,
+} from "react-bootstrap";
+import transformImage from "../../utils/transformImage";
+import { AdvancedImage, lazyload, placeholder } from "@cloudinary/react";
 function StatStack({ friendStats }) {
   if (!friendStats)
     return (
@@ -23,100 +33,113 @@ function StatStack({ friendStats }) {
   return (
     <>
       <h2 className="stats-heading">Stats Challenge</h2>
-
-      <div className="d-md-none">
-        <Row>
-          {friendStats.map((player) => (
-            <Col xs={6} key={player.id} className="text-center mb-3">
-              <Image
-                src={player.profile_pic}
-                alt={player.name}
-                thumbnail
-                width={100}
-                height={100}
-              />
-              <h5>{player.name}</h5>
-            </Col>
-          ))}
-        </Row>
-        {Object.keys(maxValues)
-          .filter((item) => !identity.includes(item))
-          .map((stat) => (
-            <Row key={stat} className="align-items-center text-center mb-2">
-              <Col xs={12} className="fw-bold">
-                {stat.replace(/_/g, " ").toUpperCase()}
+      <div className="stats-container">
+        <div className="d-md-none mobile-stack">
+          <Row>
+            {friendStats.map((player) => (
+              <Col xs={6} key={player.id} className="text-center mb-3">
+                <Image
+                  src={player.profile_pic}
+                  alt={player.name}
+                  thumbnail
+                  width={100}
+                  height={100}
+                />
+                <h5>{player.name}</h5>
               </Col>
-              {friendStats.map((player) => (
-                <Col xs={6} key={player.id}>
-                  {player[stat]}{" "}
-                  {parseInt(player[stat]) === maxValues[stat] &&
-                    offenses.includes(stat) && (
-                      <Badge bg="danger" className="badge">
-                        ⚠️
-                      </Badge>
-                    )}
-                  {parseInt(player[stat]) === maxValues[stat] &&
-                    !offenses.includes(stat) && (
-                      <Badge bg="success" className="badge">
-                        🏆
-                      </Badge>
-                    )}
+            ))}
+          </Row>
+          {Object.keys(maxValues)
+            .filter((item) => !identity.includes(item))
+            .map((stat) => (
+              <Row
+                key={stat}
+                className="align-items-center py-2 px-3 text-center mb-2"
+              >
+                <Col xs={12} className="fw-bold">
+                  {stat.replace(/_/g, " ").toUpperCase()}
                 </Col>
-              ))}
-            </Row>
-          ))}
-      </div>
+                {friendStats.map((player) => (
+                  <Col xs={6} key={player.id} className="stat-column">
+                    {player[stat]}
+                    {parseInt(player[stat]) === maxValues[stat] &&
+                      offenses.includes(stat) && (
+                        <Badge bg="danger" className="badge">
+                          ⚠️
+                        </Badge>
+                      )}
+                    {parseInt(player[stat]) === maxValues[stat] &&
+                      !offenses.includes(stat) && (
+                        <Badge bg="success" className="badge">
+                          🏆
+                        </Badge>
+                      )}
+                  </Col>
+                ))}
+              </Row>
+            ))}
+        </div>
 
-      <div className="stack">
-        {friendStats.map((player) => (
-          <Stack
-            key={player.id}
-            // direction="horizontal"
-            gap={6}
-            className="mb-4 flex-wrap d-none d-md-flex align-items-center"
-          >
-            <Image
-              src={player.profile_pic}
-              alt={player.name}
-              thumbnail
-              width={100}
-              height={100}
-            />
+        <div className="stack">
+          <CardGroup>
             <Card>
-              <Card.Title>{player.name}</Card.Title>
+              <Card.Title className="spacer"></Card.Title>
               <Card.Body>
-                {/* <Card.Img src={player.profile_pic} /> */}
                 {Object.keys(maxValues)
                   .filter((item) => !identity.includes(item))
                   .map((stat) => (
                     <Row
                       key={stat}
-                      className="align-items-center text-center mb-2"
+                      className="align-items-center text-right mb-2"
                     >
-                      <Col xs={6} className="fw-bold">
+                      <Col className="fw-bold">
                         {stat.replace(/_/g, " ").toUpperCase()}
-                      </Col>
-                      <Col xs={6} key={player.id}>
-                        {player[stat]}{" "}
-                        {parseInt(player[stat]) === maxValues[stat] &&
-                          offenses.includes(stat) && (
-                            <Badge bg="danger" className="badge">
-                              ⚠️
-                            </Badge>
-                          )}
-                        {parseInt(player[stat]) === maxValues[stat] &&
-                          !offenses.includes(stat) && (
-                            <Badge bg="success" className="badge">
-                              🏆
-                            </Badge>
-                          )}
                       </Col>
                     </Row>
                   ))}
               </Card.Body>
             </Card>
-          </Stack>
-        ))}
+            {friendStats.map((player) => (
+              <Card key={player.id}>
+                <AdvancedImage
+                  className="friends__image"
+                  cldImg={transformImage(player.profile_pic, 200)}
+                  plugins={[
+                    lazyload(),
+                    placeholder({ mode: "predominant-color" }),
+                  ]}
+                />
+                <Card.Title>{player.name}</Card.Title>
+                <Card.Body>
+                  {Object.keys(maxValues)
+                    .filter((item) => !identity.includes(item))
+                    .map((stat) => (
+                      <Row
+                        key={stat}
+                        className="align-items-center text-center mb-2"
+                      >
+                        <Col key={player.id} className="stat-column">
+                          {player[stat]}{" "}
+                          {parseInt(player[stat]) === maxValues[stat] &&
+                            offenses.includes(stat) && (
+                              <Badge bg="danger" className="badge">
+                                ⚠️
+                              </Badge>
+                            )}
+                          {parseInt(player[stat]) === maxValues[stat] &&
+                            !offenses.includes(stat) && (
+                              <Badge bg="success" className="badge">
+                                🏆
+                              </Badge>
+                            )}
+                        </Col>
+                      </Row>
+                    ))}
+                </Card.Body>
+              </Card>
+            ))}
+          </CardGroup>
+        </div>
       </div>
     </>
   );

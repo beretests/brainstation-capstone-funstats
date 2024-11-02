@@ -46,7 +46,7 @@ function StatsPage() {
     } else {
       setSelectedSeason(season);
     }
-  }, [selectedSeason, season]);
+  }, [selectedSeason]);
 
   useEffect(() => {
     if (message) {
@@ -60,7 +60,7 @@ function StatsPage() {
 
   useEffect(() => {
     getAggregateStats(id, setPlayerAggregateStats, season);
-  }, [!friendId, selectedSeason]);
+  }, [!friendId, season]);
 
   const handleClick = () => {
     navigate(`/player/${id}/stats/${season}/add`);

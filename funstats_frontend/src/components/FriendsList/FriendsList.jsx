@@ -2,25 +2,26 @@ import { useState } from "react";
 import "./FriendsList.scss";
 import {
   Stack,
-  Image,
   Card,
   Form,
   Button,
   FloatingLabel,
+  Col,
+  Row,
 } from "react-bootstrap";
 import axios from "axios";
 import { getAge } from "../../utils/getAge";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../utils/authProvider";
+import transformImage from "../../utils/transformImage";
+import {
+  AdvancedImage,
+  lazyload,
+  responsive,
+  placeholder,
+} from "@cloudinary/react";
 
-function FriendsList({
-  friends,
-  // friendStats,
-  // setFriendStats,
-  setFriendAdded,
-  setShowAlert,
-}) {
-  // const {friendId} = req.
+function FriendsList({ friends, setFriendAdded, setShowAlert }) {
   const { playerId, season } = useAuth();
   const url = import.meta.env.VITE_API_URL;
   const friendUrl = `${url}/player/${playerId}/friends`;
@@ -47,6 +48,7 @@ function FriendsList({
       console.error(error);
     }
   };
+
   return (
     <>
       <div className="friends-container">
@@ -70,47 +72,44 @@ function FriendsList({
           </Form>
         </Stack>
         <div className="friends">
-          {friends.map((friend) => (
-            <Stack
-              key={friend.id}
-              direction="horizontal"
-              gap={3}
-              className="mb-4"
-            >
-              <Image
-                src={friend.profile_pic}
-                alt={friend.name}
-                thumbnail
-                width={100}
-                height={100}
-              />
-              <Card>
-                <Card.Body>
-                  <Card.Title>{friend.name}</Card.Title>
-                  <Card.Text>
-                    <strong>Age:</strong> {getAge(friend.DOB)}
-                    <br />
-                    <strong>Position:</strong> {friend.position}
-                    <br />
-                  </Card.Text>
-                  <Button
-                    className="friends__button"
-                    onClick={() =>
-                      handleCompareStats(
-                        playerId,
-                        friend.id,
-                        season
-                        // friendStats,
-                        // setFriendStats
-                      )
-                    }
-                  >
-                    Compare Stats
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Stack>
-          ))}
+          <Row
+            xs={1}
+            md={2}
+            className="g-4 px-2 px-sm-3 px-md-4 px-md-5 px-lg-5 px-lg-10"
+          >
+            {friends.map((friend) => (
+              <Col key={friend.id}>
+                <Card className="friends__card">
+                  <AdvancedImage
+                    className="friends__image"
+                    cldImg={transformImage(friend.profile_pic, 400)}
+                    plugins={[
+                      lazyload(),
+                      placeholder({ mode: "predominant-color" }),
+                      responsive({ steps: 200 }),
+                    ]}
+                  />
+                  <Card.Body className="friends__description">
+                    <Card.Title>{friend.name}</Card.Title>
+                    <Card.Text>
+                      <strong>Age:</strong> {getAge(friend.DOB)}
+                    </Card.Text>
+                    <Card.Text>
+                      <strong>Position:</strong> {friend.position}
+                    </Card.Text>
+                    <Button
+                      className="friends__button"
+                      onClick={() =>
+                        handleCompareStats(playerId, friend.id, season)
+                      }
+                    >
+                      Compare Stats
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
         </div>
       </div>
     </>

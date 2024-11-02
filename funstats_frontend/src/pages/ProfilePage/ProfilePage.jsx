@@ -12,7 +12,7 @@ function ProfilePage() {
   const { id } = useParams();
   const url = import.meta.env.VITE_API_URL;
   const profileUrl = `${url}/profile`;
-  const { season, token } = useAuth();
+  const { season, token, playerId } = useAuth();
 
   const navigate = useNavigate();
   const [profileData, setProfileData] = useState(null);
@@ -44,7 +44,7 @@ function ProfilePage() {
     if (message) {
       const timer = setTimeout(() => {
         setShowAlert(false);
-      }, 5000);
+      }, 15000);
 
       return () => clearTimeout(timer);
     }
@@ -52,6 +52,10 @@ function ProfilePage() {
 
   const handleViewFriends = async () => {
     navigate(`/player/${id}/friends`);
+  };
+
+  const handleUpdateProfile = async () => {
+    navigate(`/player/${id}/update`);
   };
 
   const handleViewStats = async () => {
@@ -98,7 +102,7 @@ function ProfilePage() {
                 <strong>Position:</strong> {profileData.position}
                 <br />
               </Card.Text>
-              <Stack gap={2} className="col-md-5 mx-auto profile__stack">
+              <Stack gap={2} className="profile__stack">
                 <Button
                   onClick={() => handleViewStats()}
                   variant="primary"
@@ -112,6 +116,13 @@ function ProfilePage() {
                   className="profile__button"
                 >
                   View Friends
+                </Button>
+                <Button
+                  variant="primary"
+                  onClick={() => handleUpdateProfile()}
+                  className="profile__button"
+                >
+                  Update Profile
                 </Button>
               </Stack>
             </Card.Body>

@@ -28,17 +28,17 @@ function HomePage() {
 
   return (
     <>
+      {showAlert && message && (
+        <Alert
+          variant="success"
+          className="mt-3"
+          dismissable
+          onClose={() => setShowAlert(false)}
+        >
+          {message}
+        </Alert>
+      )}
       <div className="home">
-        {showAlert && message && (
-          <Alert
-            variant="success"
-            className="mt-3"
-            dismissable
-            onClose={() => setShowAlert(false)}
-          >
-            {message}
-          </Alert>
-        )}
         <Card className="blurb-card">
           <Card.Body className="blurb-card__body">
             <Card.Title className="home__page-header">FunStats</Card.Title>
