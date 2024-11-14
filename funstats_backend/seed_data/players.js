@@ -4,7 +4,8 @@ export default [
     username: "roronoa_zoro",
     name: "Eric Omeje",
     password: "$2b$10$PLtXPohMi0Tk8IZgwUa3euB5glW3PTQYRJAXIkLfqp9YuSnviDPHm",
-    profile_pic: "https://funstats-images.beretesting.com/funstats-5.jpg",
+    profile_pic:
+      "https://res.cloudinary.com/dsspeyssh/image/upload/v1730513915/funstats/funstats-5.jpg",
     DOB: "1280556000",
     position: "Center Back",
   },
@@ -13,7 +14,8 @@ export default [
     username: "elvis",
     name: "Elvis Omeje",
     password: "$2b$10$EGvWRZxg2ZMzDu36lOOjouD6qxq3dDkESJOEnDd256FPrlTdZ2Q0C", //thisisme
-    profile_pic: "https://funstats-images.beretesting.com/funstats-3.jpg",
+    profile_pic:
+      "https://res.cloudinary.com/dsspeyssh/image/upload/v1730514177/funstats/funstats-16.jpg",
     DOB: "1347948000",
     position: "Center Forward",
   },
@@ -23,7 +25,7 @@ export default [
     name: "Alex Johnson",
     password: "$2b$10$EFKJkj/sWHwB6OXlp5k1j.5sEimxJsaZegAxsMtNx/09CPSej.eCO", // password123",
     profile_pic:
-      "https://funstats-images.beretesting.com/default_profile_pic.jpg",
+      "https://res.cloudinary.com/dsspeyssh/image/upload/v1730514178/funstats/default-image.jpg",
     DOB: 1375747200,
     position: "Forward",
   },
@@ -31,8 +33,9 @@ export default [
     id: "bd9c78f3-4442-4876-8f9e-1a869afcf6da",
     username: "goal_master",
     name: "Maria Sanchez",
-    password: "$2b$10$UFQDsfdyh1ZYSbb6qGRxoeiOpC0HIQJEQrSzyp5jrGUEZhmLkVlka",  //securePass456",
-    profile_pic: "https://funstats-images.beretesting.com/funstats-4.jpg",
+    password: "$2b$10$UFQDsfdyh1ZYSbb6qGRxoeiOpC0HIQJEQrSzyp5jrGUEZhmLkVlka", //securePass456",
+    profile_pic:
+      "https://res.cloudinary.com/dsspeyssh/image/upload/v1730513916/funstats/funstats-4.jpg",
     DOB: 1435708800,
     position: "Goalkeeper",
   },
@@ -40,8 +43,9 @@ export default [
     id: "f87613bb-5a32-49ab-91b6-7f48f62f3c1f",
     username: "defense_pro",
     name: "Liam Brown",
-    password: "$2b$10$mL/ktYf0r.83g3P67vounu5DbT.2uVfDL6EGlvdPQo3MwtSlfDwpC",  //pass7890",
-    profile_pic: "https://funstats-images.beretesting.com/funstats-3.jpg",
+    password: "$2b$10$mL/ktYf0r.83g3P67vounu5DbT.2uVfDL6EGlvdPQo3MwtSlfDwpC", //pass7890",
+    profile_pic:
+      "https://res.cloudinary.com/dsspeyssh/image/upload/v1730513915/funstats/funstats-3.jpg",
     DOB: 1410220800,
     position: "Defender",
   },
@@ -49,8 +53,9 @@ export default [
     id: "ea3cfa13-b5d2-4f68-b8a8-b3b6b8d2ff76",
     username: "midfield_maestro",
     name: "Sophia Williams",
-    password: "$2b$10$/mSlRjRpRfxPuEDZ91IQ.eW3Z8PbIIdzf3h3wxlnhz4Y9SjAIsWqm",  //superSecret321",
-    profile_pic: "https://funstats-images.beretesting.com/funstats-2.jpg",
+    password: "$2b$10$/mSlRjRpRfxPuEDZ91IQ.eW3Z8PbIIdzf3h3wxlnhz4Y9SjAIsWqm", //superSecret321",
+    profile_pic:
+      "https://res.cloudinary.com/dsspeyssh/image/upload/v1730513916/funstats/funstats-2.jpg",
     DOB: 1338508800,
     position: "Midfielder",
   },
@@ -58,8 +63,9 @@ export default [
     id: "c5b172ec-e1f5-4cde-ae7e-017e14509e15",
     username: "winger_whiz",
     name: "Noah Smith",
-    password: "$2b$10$Av2kAJf/IIXXCgIoFE5WtONmxDEPqX9eKpWxEW5F2sx3VOiyladWa",   //winger2023",
-    profile_pic: "https://funstats-images.beretesting.com/funstats-1.jpg",
+    password: "$2b$10$Av2kAJf/IIXXCgIoFE5WtONmxDEPqX9eKpWxEW5F2sx3VOiyladWa", //winger2023",
+    profile_pic:
+      "https://res.cloudinary.com/dsspeyssh/image/upload/v1730513917/funstats/funstats-1.jpg",
     DOB: 1405296000,
     position: "Winger",
   },
