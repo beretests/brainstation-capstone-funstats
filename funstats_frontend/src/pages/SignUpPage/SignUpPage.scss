@@ -4,9 +4,16 @@
 .signup {
   padding: 1rem;
   background-color: $columbia-blue;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
   @include tablet {
     padding: 0 5rem;
+  }
+
+  @include desktop {
+    padding: 0 20rem;
   }
 
   &__heading {
@@ -16,5 +23,13 @@
     @include tablet {
       padding-bottom: 2rem;
     }
+  }
+
+}
+
+.form {
+
+  &__upload {
+    padding: 0.5rem;
   }
 }

@@ -5,11 +5,12 @@
   padding-top: 2rem;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 
   @include tablet {
     flex-flow: row wrap;
     gap: 1rem;
-    justify-content: space-around;
+    justify-content: center;
   }
 
   &__heading {
@@ -17,18 +18,48 @@
     text-align: center;
   }
 
-  &__stack {
-  }
-
   &__button {
     @include button;
   }
+
+  &__image {
+    max-width: 100%;
+  }
+
+  &__card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+
+    &:hover {
+      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+  }
+
+  &__description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
-.friends-container {
-  border-top: 1px solid $dim-gray;
+.card-text {
+  text-align: center;
+  padding-bottom: 0.5rem;
+}
 
-  @include tablet {
-    border-top: none;
+
+
+@media (min-width: 768px) {
+  .px-md-5 {
+    padding-left: 5rem !important;
+    padding-right: 5rem !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .px-lg-10 {
+    padding-left: 10rem !important;
+    padding-right: 10rem !important;
   }
 }

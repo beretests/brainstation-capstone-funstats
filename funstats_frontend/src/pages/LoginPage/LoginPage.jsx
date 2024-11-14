@@ -2,10 +2,15 @@ import "./LoginPage.scss";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
-import Alert from "react-bootstrap/Alert";
+import {
+  Card,
+  Button,
+  InputGroup,
+  Alert,
+  Form,
+  Row,
+  Col,
+} from "react-bootstrap";
 import { EyeFill, EyeSlashFill } from "react-bootstrap-icons";
 import { useAuth } from "../../utils/authProvider";
 
@@ -43,8 +48,8 @@ function LoginPage() {
         sessionStorage.getItem("JWTtoken"),
         sessionStorage.getItem("userId")
       );
-
-      navigate(`/player/${playerId}`, {
+      const id = sessionStorage.getItem("userId");
+      navigate(`/player/${id}`, {
         state: {
           message:
             "Successfully logged in. You can now view and update your stats as well as add friends to compare your stats!",
@@ -58,47 +63,63 @@ function LoginPage() {
   return (
     <div className="login">
       <h2 className="login__heading">Login</h2>
-      {showAlert && (
-        <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
-          <Alert.Heading>Error</Alert.Heading>
-          <p>{errorMessage}</p>
-        </Alert>
-      )}
-      <Form noValidate validated={validated} onSubmit={handleLogin}>
-        <Form.Group className="mb-3" controlId="formBasicUsername">
-          <Form.Label>Username</Form.Label>
+      <Card className="text-center" border="primary">
+        {showAlert && (
+          <Alert
+            variant="danger"
+            onClose={() => setShowAlert(false)}
+            dismissible
+          >
+            <Alert.Heading>Error</Alert.Heading>
+            <p>{errorMessage}</p>
+          </Alert>
+        )}
+        <Form noValidate validated={validated} onSubmit={handleLogin}>
+          <Form.Group as={Row} className="mb-3" controlId="formBasicUsername">
+            <Form.Label column sm={2}>
+              Username
+            </Form.Label>
+            <Col sm={10}>
+              <Form.Control required type="text" placeholder="Enter username" />
+              <Form.Control.Feedback type="invalid">
+                Please enter your username.
+              </Form.Control.Feedback>
+            </Col>
+          </Form.Group>
 
-          <Form.Control required type="text" placeholder="Enter username" />
-          <Form.Control.Feedback type="invalid">
-            Please enter your username.
-          </Form.Control.Feedback>
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <InputGroup>
-            <Form.Control
-              required
-              type={showPassword ? "text" : "password"}
-              placeholder="Password"
-            />
-            <Button
-              // variant="outline-secondary"
-              onClick={togglePasswordVisibility}
-              aria-label="Toggle password visibility"
-            >
-              {showPassword ? <EyeSlashFill /> : <EyeFill />}
-            </Button>
-            <Form.Control.Feedback type="invalid">
-              Please enter your password.
-            </Form.Control.Feedback>
-          </InputGroup>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicCheckbox"></Form.Group>
-        <Button variant="primary" type="submit">
-          Login
-        </Button>
-      </Form>
+          <Form.Group as={Row} className="mb-3" controlId="formBasicPassword">
+            <Form.Label column sm={2}>
+              Password
+            </Form.Label>
+            <Col sm={10}>
+              <InputGroup>
+                <Form.Control
+                  required
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                />
+                <Button
+                  // variant="outline-secondary"
+                  onClick={togglePasswordVisibility}
+                  aria-label="Toggle password visibility"
+                >
+                  {showPassword ? <EyeSlashFill /> : <EyeFill />}
+                </Button>
+                <Form.Control.Feedback type="invalid">
+                  Please enter your password.
+                </Form.Control.Feedback>
+              </InputGroup>
+            </Col>
+          </Form.Group>
+          <Form.Group
+            className="mb-3"
+            controlId="formBasicCheckbox"
+          ></Form.Group>
+          <Button variant="primary" type="submit">
+            Login
+          </Button>
+        </Form>
+      </Card>
     </div>
   );
 }

@@ -22,7 +22,53 @@
 
 .badge {
   position: absolute;
-  // top: 0;
-  // right: 0;
-  transform: "translate(50%, -50%)";
+  bottom: 6px;
+  margin-left: 0.25rem;
+
+  &:hover {
+    transform: "translate(50%, -50%)";
+
+  }
+
+  @include tablet {
+    // margin: 0;
+    // position: static;
+    // transform: "translate(50%, -50%)";
+  }
+}
+
+.spacer {
+  height: 216px;
+}
+
+.stat-column {
+  position: relative;
+  // margin-left: 1rem;
+  // font-size: 1.5rem;
+  background-color: rgba(173, 216, 230, 0.5);
+
+  font-weight: bold;
+}
+
+.stats-container {
+  padding: 1rem;
+  background-color: $columbia-blue;
+}
+
+.mobile-stack {
+  background-color: white;
+}
+
+.card {
+  @include tablet {
+    border: 0;
+  }
+}
+
+.card-title {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
 }

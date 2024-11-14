@@ -5,7 +5,6 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [playerId, setPlayerId] = useState(null);
-  const [selectedSeason, setSelectedSeason] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(null);
 
   useEffect(() => {
@@ -41,8 +40,6 @@ export const AuthProvider = ({ children }) => {
         login,
         logout,
         playerId,
-        setSelectedSeason,
-        selectedSeason,
         token,
       }}
     >

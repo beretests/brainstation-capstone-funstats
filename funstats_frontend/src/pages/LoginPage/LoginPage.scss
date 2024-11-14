@@ -4,13 +4,28 @@
 .login {
   background-color: $columbia-blue;
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
   @include tablet {
     padding: 1rem 5rem;
+  }
+
+  // @include tablet {
+  //   padding: 0 5rem;
+  // }
+
+  @include desktop {
+    padding: 1rem 20rem;
   }
 
   &__heading {
     text-align: center;
     padding: 1rem;
   }
+}
+
+.card {
+  padding: 1rem;
 }
